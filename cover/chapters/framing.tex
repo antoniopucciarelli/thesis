@@ -1,0 +1,228 @@
+\chapter{Problem Framing}
+
+This chapter aims to \textit{outline} the challenges that arise from designing a turbomachine using a \textbf{conventional approach}. 
+Additionally, it introduces a new \textbf{potential design method} that can address some of these issues.
+
+\section{Design Process}
+
+% The study of a turbomachinery system involves a lot of \textit{effort} in terms of \textbf{modeling of the physics} that defines the problem and in 
+% terms of the generation of the \textbf{best configuration} that fits the design constraints. 
+% An efficient way to attack the problem is to \textbf{frame} it in terms of targets and constraints and to reduce the \textbf{complexity} of the 
+% design process at its minimum in order to reduce the risks of \textit{bad design}.
+
+Studying a turbomachinery system requires significant \textit{effort}, both in terms of modeling the underlying physics that define the problem 
+and in generating the optimal configuration that aligns with design constraints. An efficient approach to \textbf{tackling} this challenge involves 
+\textbf{framing} it in terms of targets and constraints. By minimizing the complexity of the design process, one can \textit{mitigate} the risks associated with poor design.
+
+\subsection{Problem Classification}
+
+An engineering problem can be described by \textbf{inputs} and \textbf{outputs}. 
+An engineer should be able to get the best outputs giving the inputs in the less time possible. 
+Inputs and outputs can be classified in order to better understand the problem and to solve it in the most effective way.
+
+On the inputs side, they can be subdivided into: 
+\begin{itemize}
+    \item \textbf{Objectives}: these define the parameters that need optimization 
+    \item \textbf{Constraints}: these define the region of interest for the study
+\end{itemize}
+
+On the outputs side, they can be classified as follows:
+\begin{itemize}
+    \item \textbf{Objectives}: the optimized parameters resulting from the design
+    \item \textbf{Definitions}: the engineering representation of the outputs
+\end{itemize}
+
+A modeling framework serves as the link between the inputs and outputs of the problem.
+A \textit{well-designed} framework allows reaching the best solution in reasonable time.
+
+\begin{figure}
+    \centering
+    \input{tikz/designProcess}
+    \caption{Turbomachinery design classification.}
+    \label{fig:IO}
+\end{figure}
+
+Figure~\ref{fig:IO} represents a possible design problem.
+
+\subsection{Turbomachinery Analysis in Complex Machines}
+
+% A general modeling approach consists in decomposing the design of a complex machine in different \textbf{sub-problems} 
+% which have a role in the performance of the whole system.
+% 
+% As example, it is possible to subdivide the study of an aeronautical engine as the study of its \textbf{main components} 
+% - i.e. fan, compressor, combustion chamber, turbine, spool, gears, control systems and the other important assembles.
+% 
+% The main \textbf{macroscopic properties} of the system can be extracted from a \textbf{first analysis} of its main components.
+% Focusing on the \textbf{turbine}; it is possible to estimate the \textbf{number of stages} and have 
+% a first \textit{raw approximation} of the \textbf{flow deflection angles} in each stage.
+% Once generated this preliminary design, it is necessary to draw \textbf{blades} which statisfy these properties. 
+% The blade, on its side, will be \textbf{defined} by its component \textbf{sections}. The general properties of the blade will be 
+% then sum up by its \textbf{mid-section}. As result, starting from the design of a turbomachinery, 
+% the study will always be reconducted to the \textbf{design of the blades' mid-section}.
+% 
+% This result is the \textbf{pivoting point} of a \textit{new section design method}.
+
+A general modeling approach involves decomposing the design of a complex machine into various \textbf{sub-problems}, 
+each of which plays a role in the overall system's performance. For instance, the study of an aeronautical engine 
+can be subdivided into the examination of its primary components: the fan, compressor, combustion chamber, turbine, spool, gears, control systems, 
+and other important assemblies.
+
+The principal \textbf{macroscopic properties} of the system can be derived from an initial analysis of 
+its primary components. To illustrate, when focusing on the \textbf{turbine}, it becomes feasible to 
+estimate the number of stages and to make a preliminary approximation of the flow deflection angles in each stage. 
+After this preliminary design is formulated, the next step is to design blades that satisfy these specified properties. 
+Each blade, in turn, will be characterized by its \textbf{constituent sections}. The collective properties of the blade will 
+then be \textit{summarized} by its \textbf{mid-section}. Consequently, the design process for turbomachinery \textbf{invariably} leads back to 
+the design of the blades' mid-section.
+
+This outcome serves as the \textit{focal point} of a new section design methodology. 
+
+Figure~\ref{fig:decomposition} depicts the central feature of problem decomposition.
+
+\begin{figure}[!h]
+    \centering
+    \input{tikz/decomposition}
+    \caption{Problem decomposition.}
+    \label{fig:decomposition}
+\end{figure}
+
+\section{Design Methods}
+
+% Having understood that the section generation is the \textbf{most repetive task} inside the turbomachinery design process, 
+% it is convenient to understand also the state of the art for the section generation.
+% There are different methods for the design of a blade section. Most of them can be defined as \textbf{iterative methods}, 
+% where a \textbf{numerical scheme} is adopted for the \textit{description} of the flow properties around a geometry of study.  
+
+% It is clear that \textbf{avoiding} this optimization task, which involves \textbf{CFD}, could play a \textit{key-role} in the \textbf{reduction} of the design time.
+
+Recognizing that the section generation is the most \textbf{repetitive task} in the turbomachinery design process, 
+it is advantageous to also \textbf{comprehend} the current \textbf{state of the art} in the section generation. 
+Various methods exist for designing a blade section, many of which can be classified as \textbf{iterative processes}. 
+In these methods, a \textbf{numerical scheme} is employed to describe flow properties around a chosen geometry.
+
+It is evident that \textit{sidestepping} this optimization task, which \textbf{requires Computational Fluid Dynamics} (CFD), 
+could substantially contribute to \textbf{reducing design time}.
+
+\subsection{Iterative Based Method}
+
+A further more classification can be made on the iterative based methods. 
+These methods can be:
+
+\begin{itemize}
+    \item \textbf{Automated}: done using \textbf{computers}, where the solver tends \textit{blindly} to the optimal configuration.
+    \item \textbf{Manaul}: done by \textbf{engineers}, where \textit{prior knowledge} and \textit{experience} allow reaching the optimum.
+\end{itemize}
+
+These methods all encounter the same challenge: \textbf{time is wasted on iterations involving CFD}~\cite{denton2010some}. 
+On the other hand, each of these methods has its own \textbf{advantage}. In the case of \textbf{automated methods}, optimization is \textbf{expedited} through \textbf{computer usage}~\cite{shahpar2004review}. 
+In contrast, \textbf{manual methods} leverage \textbf{prior knowledge} and \textbf{experience} to \textbf{crunch down the domain of study}, consequently reducing the time required for optimization.
+
+\subsection{Non-Iterative Based Method}
+
+The non-iterative-based method integrates \textbf{prior knowledge} and \textbf{experience}, utilizing data, along with the \textbf{speed} of computers through machine learning.
+
+To describe this method, it is essential to introduce a \textit{new way} of design a blade.
+Instead of generating a blade by \textit{iterating through various geometries}, 
+this method constructs a blade \textit{using a dataset}~\cite{mitchell1997artificial} that represents a range of blade variations. 
+Within this domain of blades, the optimal blade is determined by \textbf{maximizing the defined objectives} while adhering to the \textbf{imposed constraints}.
+
+The \textbf{effectiveness} and \textbf{accuracy} of this method \textbf{rely} significantly on the \textbf{database} that must accurately represent the designated study domain. 
+The sole optimization process employed by this method is associated with identifying appropriate blades that define the domain of study.
+
+\subsection{Concepts}
+
+After introducing this new method, its framework is \textit{grounded} in four other key concepts. 
+These concepts dictate the approach to \textbf{generating} and \textbf{processing data} within the method. 
+These concepts are:
+
+\begin{itemize}
+    \item The suitable machine learning model capable of \textit{accommodating} the \textbf{physics inherent in midsection generation}.
+    \item The \textit{macroscopic} behavior of a blade.
+    \item The \textit{local distribution of the load} across the blade.
+    \item The \textit{dimensionality reduction} of the problem through a \textbf{parameterized representation} of both the blade and its loading.
+\end{itemize}
+
+\subsubsection{Physics \& Modeling}
+
+% One of the main aspects to consider is the way data will be processed by the machine-learning algorithm. 
+% A blade design is not subjected to external random noise which means that a blade will always \textit{behave} in
+% the same way giving the same working conditions. This concept highlights the fact that there is a 
+% \textit{one-to-one} correlation between the inputs and the geometry. 
+
+% This concept is extremely important for the choice of the machine-learning model. 
+% Given this data correlelation, a regression will be used for the interpolation of the 
+% domain.
+
+One of the primary aspects to consider is how data will be processed by the machine learning algorithm. Blade design is not susceptible to external random noise, implying that a blade will consistently exhibit the same behavior under identical operating conditions. This underscores the existence of a \textit{one-to-one} correlation between the inputs and the resulting geometry.
+
+This concept holds great significance for selecting the appropriate machine learning model. Due to this data correlation, a regression approach will be employed for interpolating within the domain.
+
+\subsubsection{Aerodynamic Duty}
+
+Because of the high dimensionality of the problem, it is necessary to classify the objectives of study 
+in order to minimize at its best the number of inputs. 
+
+\input{tikz/aerodynamicDuty}
+
+A way of describing the macroscopic working conditions of the flow is to define:
+
+\begin{itemize}
+    \item $\alpha_1$: inlet flow angle 
+    \item $\alpha_2$: outlet flow angle 
+    \item $M_2$: outlet Mach number 
+    \item $Re$: Reynolds number of the flow
+\end{itemize}
+
+These four parameters, represented in Figure~\ref{fig:aeroDuty}, are the minimum requirements for the definition of a working condition or \textbf{duty}
+of the blade. As result, these parameters will be indentified as \textbf{aerodynamic duty} of the blade.
+
+\subsubsection{Aerodynamic Style}
+
+% In the same manner, a blade can be described by its \textit{load behavior}. Contrarly to the \textbf{aerodynamic duty}
+% the load can be defined as a local property of the blade. Following the same philosophy of the aerodynamic duty, 
+% it is possible to \textbf{parametrize} the load around a blade in order to study the 
+% \textbf{main load patterns} which are of \textbf{interest} in the engineering field. 
+
+% % Figure~\ref{fig:loadPatters} shows the difference between a \textit{good} and \textit{applicable} load pattern and a 
+% % \textit{poor-performing} pattern in the \textbf{high-pressure turbine} field.
+
+% In the present study, only \textit{useful} \textbf{load-patterns} will be used for the generation of a database. 
+% The usage of \textit{useful} \textbf{load-patterns} avoid \textit{unnecessary} diffusion and are the ones which
+% generate the \textit{highest load differences} between suction and pressure side.   
+
+% These \textbf{load-patterns} will take the name of \textbf{aerodynamic style} of the blade.
+
+
+In a similar way, a blade's behavior can be characterized by its \textbf{load distribution}. In contrast to the \textbf{aerodynamic duty}, 
+the load can be defined as a localized property of the blade. Adhering to the same philosophy as the aerodynamic duty, 
+it is possible to \textbf{parametrize} the load distribution around a blade, thereby enabling the examination 
+of key load patterns relevant to the engineering field.
+
+Within the context of the current study, only \textit{pertinent load patterns} will be used for database generation. 
+The usage of \textit{useful load-patterns} avoid \textit{unnecessary} diffusion and are the ones which
+generate the \textit{highest load differences} between suction and pressure side.   
+
+\subsubsection{Dimensionality}
+
+% After having introduced two important classifications for the reduction of the \textbf{constraints dimensionality}, 
+% a dimensionality reduction will be used as well for the definition of the blade. 
+
+% The blade parametrization allows saving a lot of memory and sets a common definition of the whole possible blades inside the database. 
+
+% Another important feature lies in reducing the complexity of data interpolation because of the parametrization:
+% the interpolation of parameters is much easier than interpolating the \textit{behavior} of the blade's coordinates.
+
+Having introduced two significant classifications for reducing constraint dimensionality, a dimensionality reduction technique will also be employed to define the blade.
+
+Blade parametrization offers the advantage of \textbf{conserving memory} space and establishing a \textbf{uniform definition} for all potential blades within the database.
+
+Furthermore, another noteworthy benefit emerges from the simplification of \textbf{data interpolation} due to parametrization: interpolating parameters is considerably simpler than interpolating the \textbf{intricate behavior of the blade's coordinates}.
+
+\begin{figure}[!h]
+    \centering
+    \input{tikz/blocks}
+    \caption{Representation of the main differences between the method.} 
+    % and the main characteristics of the new framework.}
+    \label{fig:framework}
+\end{figure}
+

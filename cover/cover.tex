@@ -1,0 +1,568 @@
+% A LaTeX template for MSc Thesis submissions to 
+% Politecnico di Milano (PoliMi) - School of Industrial and Information Engineering
+%
+% S. Bonetti, A. Gruttadauria, G. Mescolini, A. Zingaro
+% e-mail: template-tesi-ingind@polimi.it
+%
+% Last Revision: October 2021
+%
+% Copyright 2021 Politecnico di Milano, Italy. NC-BY
+
+\documentclass{config/polimiThesis}
+
+%------------------------------------------------------------------------------
+%	REQUIRED PACKAGES AND  CONFIGURATIONS
+%------------------------------------------------------------------------------
+
+% CONFIGURATIONS
+\usepackage{parskip}       % For paragraph layout
+\usepackage{setspace}      % For using single or double spacing
+\usepackage{emptypage}     % To insert empty pages
+\usepackage{multicol}      % To write in multiple columns (executive summary)
+\setlength\columnsep{15pt} % Column separation in executive summary
+\setlength\parindent{0pt}  % Indentation
+\raggedbottom  
+
+% PACKAGES FOR TITLES
+\usepackage{titlesec}
+% \titlespacing{\section}{left spacing}{before spacing}{after spacing}
+\titlespacing{\section}{0pt}{3.3ex}{2ex}
+\titlespacing{\subsection}{0pt}{3.3ex}{1.65ex}
+\titlespacing{\subsubsection}{0pt}{3.3ex}{1ex}
+\usepackage{color}
+\usepackage{multirow}
+
+% PACKAGES FOR LANGUAGE AND FONT
+\usepackage[english]{babel} % The document is in English  
+\usepackage[utf8]{inputenc} % UTF8 encoding
+\usepackage[T1]{fontenc}    % Font encoding
+\usepackage[11pt]{moresize} % Big fonts
+
+% PACKAGES FOR IMAGES
+\usepackage{graphicx}
+\usepackage{transparent} % Enables transparent images
+\usepackage{eso-pic}     % For the background picture on the title page
+\usepackage{subfig}      % Numbered and caption subfigures using \subfloat.
+\usepackage{float}
+
+\usepackage{tikz}
+\usetikzlibrary{
+    patterns,
+    overlay-beamer-styles,
+    datavisualization,
+    datavisualization.formats.functions,
+    fit,
+    trees,
+    backgrounds,
+    mindmap,
+    positioning,
+    shapes.geometric,
+    arrows
+}
+
+\usepackage{pgfplots}  
+\usepgfplotslibrary{
+    groupplots,
+    units
+}
+
+\usepackage{pgf-pie}
+\usepackage{csvsimple}
+\usepackage{pdfpages}
+
+\usepackage{enumitem}
+\setitemize{itemsep=-5pt}
+
+\usepackage{relsize}
+\usepackage{makecell}
+
+\graphicspath{{./images/}} 
+
+\usepackage{caption}        
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{xcolor}                 
+\usepackage{float}
+
+% STANDARD MATH PACKAGES
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage[overload]{empheq} % For braced-style systems of equations.
+\usepackage{fix-cm}           % To override original LaTeX restrictions on sizes
+
+% PACKAGES FOR TABLES
+\usepackage{tabularx}
+\usepackage{longtable} % Tables that can span several pages
+\usepackage{colortbl}
+
+% PACKAGES FOR ALGORITHMS (PSEUDO-CODE)
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{titlesec}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+% PACKAGES FOR REFERENCES & BIBLIOGRAPHY
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false, % true
+    linkcolor=blue!80!black,
+    filecolor=magenta,      
+    urlcolor=cyan!80!black,
+    citecolor=red!70!black,
+    pdftitle={THESIS},
+    pdfpagemode=FullPage,
+}
+
+\usepackage{cleveref}
+\usepackage[square, numbers, sort&compress]{natbib} % Square brackets, citing references with numbers, citations sorted by appearance in the text and compressed
+\bibliographystyle{abbrvnat}                        % You may use a different style adapted to your field
+
+% OTHER PACKAGES
+\usepackage{pdfpages} % To include a pdf file
+\usepackage{afterpage}
+\usepackage{fancyhdr} % For the headers
+\fancyhf{}
+
+\usepackage{comment}
+\usepackage{listings}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinestyle{customPy}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  numbers=left,      
+  numbersep=6pt, 
+  xleftmargin=\parindent,
+  language=Python,
+  basicstyle=\fontsize{11}{11}\ttfamily,
+  showstringspaces=false,
+  keywordstyle=\bfseries\color{purple},
+  commentstyle=\itshape\color{violet},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customTXT}{
+    % basicstyle=\small\ttfamily,
+    basicstyle=\ttfamily\small,
+    commentstyle=\itshape\color{violet}, % style of comment
+    stringstyle=\color{blue}, % style of strings
+    numbers=left,
+    numberstyle=\scriptsize,
+    % basicstyle=\ttfamily\footnotesize,  % Style of the font that is used for the code
+    % backgroundcolor=\color{gray!10},    % Background color
+    % keywordstyle=\color{red!75!black},  % Keyword style
+    % stringstyle=\color{magenta!40!black}, % String style
+    % commentstyle=\color{green!30!black}, % Comment style
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{gray!10}, %only if you like
+    string=[s]{"}{"},
+    comment=[l]{ !},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{black}0}}}{1}
+         {1}{{{\color{black}1}}}{1}
+         {2}{{{\color{black}2}}}{1}
+         {3}{{{\color{black}3}}}{1}
+         {4}{{{\color{black}4}}}{1}
+         {5}{{{\color{black}5}}}{1}
+         {6}{{{\color{black}6}}}{1}
+         {7}{{{\color{black}7}}}{1}
+         {8}{{{\color{black}8}}}{1}
+         {9}{{{\color{black}9}}}{1}
+}
+
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\small,
+    commentstyle=\itshape\color{violet},
+    stringstyle=\color{blue}, % style of strings
+    numbers=left,
+    numberstyle=\scriptsize,
+    % basicstyle=\ttfamily\footnotesize,  % Style of the font that is used for the code
+    % backgroundcolor=\color{gray!10},    % Background color
+    % keywordstyle=\color{red!75!black},  % Keyword style
+    % stringstyle=\color{magenta!40!black}, % String style
+    % commentstyle=\color{green!30!black}, % Comment style
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{gray!10}, %only if you like
+    string=[s]{"}{"},
+    comment=[l]{ //},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{black}0}}}{1}
+         {1}{{{\color{black}1}}}{1}
+         {2}{{{\color{black}2}}}{1}
+         {3}{{{\color{black}3}}}{1}
+         {4}{{{\color{black}4}}}{1}
+         {5}{{{\color{black}5}}}{1}
+         {6}{{{\color{black}6}}}{1}
+         {7}{{{\color{black}7}}}{1}
+         {8}{{{\color{black}8}}}{1}
+         {9}{{{\color{black}9}}}{1}
+}
+
+% Input of configuration file. Do not change config.tex file unless you really know what you are doing. 
+\input{config/config}
+
+%----------------------------------------------------------------------------
+%	NEW COMMANDS DEFINED
+%----------------------------------------------------------------------------
+
+% EXAMPLES OF NEW COMMANDS
+\newcommand{\bea}{\begin{eqnarray}} % Shortcut for equation arrays
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\e}[1]{\times 10^{#1}}  % Powers of 10 notation
+
+\newenvironment{dedication}
+{%\clearpage           % we want a new page          %% I commented this
+\thispagestyle{empty}% no header and footer
+\vspace*{\stretch{1}}% some space at the top
+\itshape             % the text is in italics
+\raggedleft          % flush to the right margin
+}
+{\par % end the paragraph
+\vspace{\stretch{3}} % space at bottom is three times that at the top
+\clearpage           % finish off the page
+}
+
+%----------------------------------------------------------------------------
+%	ADD YOUR PACKAGES (be careful of package interaction)
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+%	ADD YOUR DEFINITIONS AND COMMANDS (be careful of existing commands)
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+%	BEGIN OF YOUR DOCUMENT
+%----------------------------------------------------------------------------
+
+\begin{document}
+
+\fancypagestyle{plain}{%
+\fancyhf{} % Clear all header and footer fields
+\fancyhead[RO,RE]{\thepage} %RO=right odd, RE=right even
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+
+%----------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------
+
+\pagestyle{empty} % No page numbers
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the preamble pages
+
+\puttitle{
+	title = Data Driven Approach \\ to Turbomachinery Blade Design, % Title of the thesis
+	name = Antonio Pucciarelli, % Author Name and Surname
+	course = Aeronautical Engineering, % Study Programme (in Italian)
+	ID = 974675,  % Student ID number (numero di matricola)
+	advisor = Prof. Sergio Lavagnoli, % Supervisor name
+	promoter = Prof. Paolo Gaetani,
+    % coadvisor = {Prof. Paolo Gaetani}, % Co-Supervisor name, remove this line if there is none
+	academicyear = {2022-2023},  % Academic Year
+} % These info will be put into your Title page 
+
+
+
+%----------------------------------------------------------------------------
+%	PREAMBLE PAGES: ABSTRACT (inglese e italiano), EXECUTIVE SUMMARY
+%----------------------------------------------------------------------------
+\newpage
+% \AddToShipoutPicture*{\BackgroundPic}
+\blankpage
+\setcounter{page}{1} % Set page counter to 1
+
+% ABSTRACT IN ENGLISH
+% \chapter*{Abstract} 
+% % Here goes the Abstract in English of your thesis followed by a list of keywords.
+% % The Abstract is a concise summary of the content of the thesis (single page of text)
+% % and a guide to the most important contributions included in your thesis.
+% % The Abstract is the very last thing you write.
+% % It should be a self-contained text and should be clear to someone who hasn't (yet) read the whole manuscript.
+% % The Abstract should contain the answers to the main scientific questions that have been addressed in your thesis.
+% % It needs to summarize the adopted motivations and the adopted methodological approach as well as the findings of your work and their relevance and impact.
+% % The Abstract is the part appearing in the record of your thesis inside POLITesi,
+% % the Digital Archive of PhD and Master Theses (Laurea Magistrale) of Politecnico di Milano.
+% % The Abstract will be followed by a list of four to six keywords.
+% % Keywords are a tool to help indexers and search engines to find relevant documents.
+% % To be relevant and effective, keywords must be chosen carefully.
+% % They should represent the content of your work and be specific to your field or sub-field.
+% % Keywords may be a single word or two to four words. 
+% In the field of turbomachinery design, the current design models are often slow and repetitive. These models rely heavily on computers and frequently overlook any existing knowledge about the design space. This work introduces an innovative methodology in the domain of turbomachinery design, seamlessly integrating machine learning techniques into the blade design process.
+
+% The importance of this thesis lies in its ability to eliminate the requirement for CFD simulations in the design process. Moreover, it gives designers a clear understanding of the loading limit of a blade and a deep understanding of the correlations between the loading distribution and the blade geometry. It also sheds light on the physical limitations a designer might come across during the design process.
+
+% % The process begins with the generation of an extensive database, achieved through an in-depth analysis of the main design objectives. This forms the basis for applying artificial intelligence in the field of turbomachinery blade design. The thesis adopts a modal reduction technique that effectively refines and narrows the extensive design space, providing a better understanding of the correlation between the loading distribution and the blade geometry.
+
+% Highlighting the significant influence of this study, the thesis not only presents a fresh design approach but also offers in-depth understanding of the crucial steps that support its implementation. Covering the entire process from creating data to utilizing artificial intelligence in turbomachinery design, this research sets the groundwork for more effective design strategies.
+
+% To sum up, this thesis introduces a new approach to designing turbomachinery blades through the integration of machine learning methods. By creating a fast and independent design process and providing a clear explanation of how data is collected and analyzed, this research brings improved efficiency and accuracy to the world of turbomachinery design.
+% \\
+% \\
+% % \textbf{Keywords:} \textit{Turbomachinery, data generation, optimization, data analysis, artificial intelligence, principal component analysis} % Keywords
+% \textbf{Keywords:} \textit{Turbomachinery, data analysis, artificial intelligence, modal reduction}
+
+% % ABSTRACT IN ITALIAN
+% \chapter*{Abstract in lingua italiana}
+% Nel campo della progettazione di turbomacchine, i modelli di progettazione attuali sono spesso lenti e ripetitivi. Questi modelli si basano pesantemente sui computer e spesso trascurano qualsiasi conoscenza esistente dello spazio di progettazione. Questo lavoro introduce una metodologia innovativa nel campo della progettazione di turbomacchine, integrando delle tecniche di intelligenza artificiale per la progettazione di palette di turbina.
+
+% L'importanza di questa tesi risiede nella sua capacità di eliminare la necessità di simulazioni CFD nel processo di progettazione di palette per turbomacchine. Inoltre, fornisce ai progettisti una chiara visione del limite di carico di una pala e una buona descirzione delle correlazioni tra la distribuzione del carico e la geometria della pala. Inoltre, getta luce sulle limitazioni fisiche che un progettista potrebbe incontrare durante il processo di progettazione.
+
+% % Il processo inizia con la generazione di un ampio database, ottenuto attraverso un'analisi approfondita degli obiettivi principali di progettazione. Questo costituisce la base per l'applicazione dell'intelligenza artificiale nel campo della progettazione di pale per turbomacchine. La tesi adotta una tecnica di riduzione modale che affina ed restringe efficacemente l'ampio spazio di progettazione, fornendo una migliore comprensione della correlazione tra la distribuzione del carico e la geometria.
+
+% Evidenziando l'influenza significativa di questo studio, la tesi non solo presenta un approccio di progettazione innovativo, ma offre anche una comprensione approfondita dei passaggi cruciali che ne sostengono l'attuazione. Coprendo l'intero processo dalla creazione dei dati all'utilizzo dell'intelligenza artificiale nella progettazione di turbomacchine, questa ricerca getta le basi per strategie di metodi di progettazione più efficaci.
+
+% In sintesi, questa tesi introduce un nuovo approccio alla progettazione delle pale per turbomacchine. Creando un processo di progettazione rapido e indipendente e fornendo una spiegazione chiara di come vengono raccolti e analizzati i dati, questa ricerca introduce l'integrazione dell'intelligenza artificiale nella progettazione di turbomacchine.
+% \\
+% \\
+% % \textbf{Parole chiave:} \textit{Turbomacchine, generazione di dati, ottimizzazione, analisi di dati, intelligenza artificiale, riduzione modale} % Keywords (italian)
+% \textbf{Parole chiave:} \textit{Turbomacchine, analisi di dati, intelligenza artificiale, riduzione modale} % Keywords (italian)
+
+%----------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES/SYMBOLS
+%----------------------------------------------------------------------------
+
+% \cleardoublepage
+% \thispagestyle{empty}
+% \epigraph{Discipline, doing what you hate to do but do it like you love it.}{\textit{Mike Tyson}}
+% \cleardoublepage
+% \cleardoublepage
+% \begin{dedication}
+
+%     Ad Alessandro, \\ Lucia e \\ Valerio, \\ la mia Famiglia. 
+  
+%     \vspace{\baselineskip}
+    
+%     \usefont{T1}{LobsterTwo-LF}{bx}{it}
+%     Antonio
+
+% \end{dedication}
+
+% TABLE OF CONTENTS
+% \thispagestyle{empty}
+% \tableofcontents % Table of contents 
+% \thispagestyle{empty}
+% \cleardoublepage
+
+% LIST OF FIGURES
+% \listoffigures
+
+% LIST OF TABLES
+% \listoftables
+
+% LIST OF SYMBOLS
+% Write out the List of Symbols in this page
+% \chapter*{List of Symbols} % You have to include a chapter for your list of symbols (
+% \begin{table}[H]
+    % \centering
+    % \begin{tabular}{lll}
+        % \textbf{Variable} & \textbf{Description} & \textbf{SI unit} \\\hline\\[-9px]
+        % $\bm{u}$ & solid displacement & m \\[2px]
+        % $\bm{u}_f$ & fluid displacement & m \\[2px]
+    % \end{tabular}
+% \end{table}
+
+% \chapter*{List of Abbreviations}
+
+% \begin{longtable}{p{2.5cm}p{8cm}}
+%     % \toprule
+%     \hline
+%     Abbreviation & Definition \\
+%     % \midrule\endhead % Add abbreviations alphabetically here:
+%     \hline
+%     \texttt{SINL} & Inlet slope \\
+%     \texttt{SOUT} & Outlet slope \\ 
+%     \texttt{KUTTA} & Kutta condition \\ 
+%     \texttt{CHINL} & Inlet channel \\ 
+%     \texttt{CHOUT} & Outlet channel \\ 
+%     \texttt{PITCH} & Blade pitch \\ 
+%     \texttt{X(*)} & Blade point $x$ coordinate \\
+%     \texttt{Y(*)} & Blade point $y$ coordinate \\
+%     \texttt{INL SLOPE} & Inlet slope variable in \texttt{MISES} \\
+%     \texttt{EXIT SLOPE} & Outlet slope variable in \texttt{MISES} \\
+%     \texttt{LE STAGNATION} & Leading edge stagnatnio variable in \texttt{MISES} \\
+%     \texttt{EXIT PRESSURE} & Outlet pressure variable in \texttt{MISES} \\
+%     \texttt{INL MACH} & Inlet Mach number variable in \texttt{MISES} \\
+%     \texttt{INL SLOPE DRIVE} & Solving strategy in \texttt{MISES} based on the inlet slope \\
+%     \texttt{LE/TE KUTTA} & \texttt{MISES} constraint based on the Kutta condition at the leading edge and the trailing edge \\
+%     \texttt{INL P0/P0r DRIVE} & Solving strategy in \texttt{MISES} based on the inlet pressure ratio \\
+%     \texttt{OUT MACH DRIVE} & Solving strategy in \texttt{MISES} based on the outlet Mach number \\
+%     \texttt{INL MACH} & Inlet Mach number value in \texttt{MISES} \\ 
+%     \texttt{INL P1/P0a} & Inlet pressure fraction value in \texttt{MISES} \\
+%     \texttt{INL SLOPE} & Inlet flow slope value in \texttt{MISES} \\
+%     \texttt{INL POSITION} & Inlet boundary conditions position value in \texttt{MISES} \\   
+%     \texttt{OUT MACH} & Oulet Mach number value in \texttt{MISES} \\ 
+%     \texttt{OUT P1/P0a} & Outlet pressure fraction value in \texttt{MISES} \\
+%     \texttt{OUT SLOPE} & Outlet flow slope value in \texttt{MISES} \\
+%     \texttt{OUT POSITION} & Outlet boundary conditions position value in \texttt{MISES} \\   
+%     \texttt{REYNOLDS} & Flow inlet Reynolds number in \texttt{MISES} \\ 
+%     \texttt{NCRIT} & \texttt{MISES} turbulence model parameter \\
+%     \texttt{XTRANS1} & Guess on the transition point at the prssure side of the blade in \texttt{MISES} \\
+%     \texttt{XTRANS2} & Guess on the transition point at the suction side of the blade in \texttt{MISES} \\
+%     \texttt{ISMOM} & \texttt{MISES} problem solving strategy \\
+%     \texttt{MCRIT} & \texttt{MISES} critical Mach number for the shoch sensitivity setup \\
+%     \texttt{MUCON} & \texttt{MISES} shock losses artificial dissipation \\
+%     \texttt{MFRin | HWRAT} & \texttt{MISES} variables not used in the present flow setup \\ 
+%     \texttt{BVR1in | BVR2in} & \texttt{MISES} variables not used in the present flow setup \\ 
+%     CFD & Computational fluid dynamics \\ 
+%     RBF & Radial basis functions \\
+%     PCA & Principal component analysis \\ 
+%     \hline
+%     % \bottomrule
+% \end{longtable}
+
+% \chapter*{List of Symbols}
+
+% \begin{longtable}{p{2.5cm}p{8cm}p{2.5cm}}
+%     % \toprule
+%     \hline
+%     Symbol & Definition & Unit \\
+%     % \midrule\endhead % Add Latin symbols alphabetically here:
+%     \hline
+%     $\gamma$ & Stagger angle & [$\circ$] \\
+%     $\chi_1$ & Metal inlet angle & [$\circ$] \\
+%     $\chi_2$ & Metal outlet angle & [$\circ$] \\ 
+%     $n$ & Fist camberline parameter & [-] \\
+%     $a$ & Second camberline parameter & [-] \\
+%     $b$ & Third camberline parameter & [-] \\
+%     $x$ & Axial chord fraction & [-] \\
+%     $y$ & Camberline ordinate & [-] \\
+%     $y^{\prime}$ & Camberline first derivative & [-] \\
+%     $\boldsymbol{n}$ & Camberline normal versor & [-] \\
+%     $n_x$ & Camberline normal versor $x$ component & [-] \\
+%     $n_y$ & Camberline normal versor $y$ component & [-] \\
+%     $S_{(x, i, N)}$ & Bernstein function & [-] \\
+%     $A_i$ & Bernstein weight & [-] \\
+%     $N$ & Bernstein number of modes & [-] \\
+%     $C_{(x)}$ & Shape function & [-] \\ 
+%     $\zeta_{(x)}$ & Thickness function & [-] \\ 
+%     $\zeta_{TE_{(x)}}$ & Trailing edge thickness function & [-] \\
+%     $R_{LE}$ & Leading edge radius adimensionalized by the chord & [-] \\
+%     $R_{TE}$ & Trailing edge radius adimensionalized by the chord & [-] \\
+%     $x_{PS}$ & Pressure side $x$ component & [-] \\
+%     $y_{PS}$ & Pressure side $y$ component & [-] \\
+%     $x_{SS}$ & Suction side $x$ component & [-] \\
+%     $y_{SS}$ & Suction side $y$ component & [-] \\
+%     $\beta$ & Blade wedge angle & [$\circ$] \\ 
+%     $A_0$ & Kulfan parametrization $i = 0$ parameter: related to $R_{LE}$ & [-] \\
+%     $A_N$ & Kulfan parametrization $i = N$ parameter: related to $R_{TE}$ & [-] \\
+%     $pitch$ & Adimensionalized blade pitch over chord & [-] \\
+%     $N_{new}$ & New parameters counts for blade scaling & [-] \\
+%     $\alpha_1$ & Inlet flow angle & [$\circ$] \\
+%     $\alpha_2$ & Outlet flow angle & [$\circ$] \\
+%     $M_2$ & Oulet flow Mach number after mixed out & [-] \\
+%     $Re$ & Reynolds number computed at inlet & [-] \\
+%     $M_{LE}$ & Leading edge Mach number used for the aerodynamic style curve & [-] \\
+%     $M_{PEAK}$ & Peak Mach number used for the aerodynamic stule curve & [-] \\
+%     $M_{PRESS}$ & Pressure Mach number used for the aerodynamic style curve & [-] \\
+%     $S_{PEAK}$ & Surface position where $M_{PEAK}$ is located over the aerodynamic style curve & [-] \\
+%     $M_{TE}$ & Trailing edge Mach number, it varies on the position: suction side or pressure side & [-] \\
+%     $S_{TOT}$ & Total surface length & [-] \\
+%     $M_1$ & Inlet Mach number & [-] \\
+%     $M_{1, ax}$ & Axial inlet Mach number & [-] \\
+%     $\boldsymbol{x}_0$ & Optimizer initial guess & [-] \\ 
+%     $\boldsymbol{x}$ & Optimizer blade geometry array at \texttt{iter} & [-] \\
+%     \texttt{iter} & Iteration in the optimization algorithm & [-] \\
+%     \texttt{iterTol} & Iteration tolerance in the optimization algorithm & [-] \\
+%     \texttt{cost} & Convergence cost at \texttt{iter} in the optimization algorithm & [-] \\
+%     \texttt{costTol} & Convergence tolerance in the optimization algorithm & [-] \\
+%     $\sigma$ & Standard deviation of the error at \texttt{iter} in the optimization algorithm & [-] \\
+%     $\sigma_{tol}$ & Standard deviation tolerance in the optimization algorithm & [-] \\
+%     $RMSE$ & Root mean square error over the blade & [-] \\
+%     $\Delta \alpha_2$ & Exit angle error & [$\circ$] \\ 
+%     $cost$ & Cost function that is used inside \texttt{TurbOpt} & [-] \\ 
+%     $\frac{M_{real}}{M_{TE,real}} \Big|_i$ & Mach fraction, computed by \texttt{MISES}, at the $i_{th}$ point over the blade surface length used in the $RMSE$ computation & [-] \\
+%     $\frac{M_{target}}{M_{TE,target}} \Big|_i$ & Mach fraction, set up by the aerodynamic style, at the $i_{th}$ point over the blade surface length used in the $RMSE$ computation & [-] \\
+%     $\mathcal{X}$ & Aerodynamic style and aerodynamic duty dataset & [-] \\
+%     $\mathcal{Y}$ & Blade geometry dataset & [-] \\
+%     $\mathcal{X_{*}}$ & Aerodynamic style and aerodynamic duty training dataset & [-] \\
+%     $\mathcal{Y_{*}}$ & Blade geometry training dataset & [-] \\
+%     $\mathcal{X_{**}}$ & Aerodynamic style and aerodynamic duty test dataset & [-] \\
+%     $\mathcal{Y_{**}}$ & Blade geometry test dataset & [-] \\ 
+%     $\mathnormal{f}$ & Analytical function for the interpolation of the blade geometry domain & [-] \\
+%     $\hat{\mathnormal{f}}$ & Numerical approximated function for the interpolation of the blade geometry domain & [-] \\
+%     $c$ & Radial basis functions length scale & [-] \\ 
+%     $d$ & Euclidean distance between to points inside the domain & [-] \\
+%     $\alpha$ & Regularization parameter in the machine learning model & [-] \\ 
+%     $\gamma^{i}$ & $i_{th}$ parameter for the idenfication of the stagger angle & [-] \\ 
+%     $\boldsymbol{w}$ & Machine learning weight & [-] \\ 
+%     $\boldsymbol{\Phi}$ & Matrix which containts the RBF & [-] \\ 
+%     $\Phi$ & Radial basis function & [-] \\ 
+%     $m_*$ & Training set dimension & [-] \\ 
+%     $J_{(\boldsymbol{x}_*)}$ & Functional to minimize & [-] \\ 
+%     $J_{(\boldsymbol{x}_{**})}$ & Testing function & [-] \\ 
+%     $\sigma$ & Modal shape variance & [-] \\
+%     $\frac{pitch}{chord}$ & Blade solidity. The chord in the present work is set to $1$ & [-] \\ 
+%     % $\mathtt{\rho}$ & Density (used in Figure~\ref{fig:opt4}) & \Big[$\frac{kg}{m^3}$\Big] \\
+%     % $\mathtt{\rho_0}$ & Total density (used in Figure~\ref{fig:opt4}) & \Big[$\frac{kg}{m^3}$\Big] \\
+%     % $\mathtt{p}$ & Static pressure (used in Figure~\ref{fig:opt4}) & [Pa] \\
+%     % $\mathtt{p_0}$ & Total pressure (used in Figure~\ref{fig:opt4} and Figure~\ref{fig:opt5}) & [Pa] \\
+%     % $\mathtt{C_p}$ & Compressible pressure coefficient (used in Figure~\ref{fig:opt5}) & [-] \\
+%     % $\Delta \mathtt{p_0}$ & Variation of the total pressure (used in Figure~\ref{fig:opt5}) & [Pa] \\
+%     % $\Delta \mathtt{C_{p_0}}$ & Variation of the coefficient of total pressure (used in Figure~\ref{fig:opt5}) & [-] \\
+%     \hline
+%     % \midrule % Add Greek symbols alphabetically here:
+%     % $\rho$ & Density & [kg/m$^3$] \\
+%     % ... \\
+%     % \bottomrule
+% \end{longtable}
+
+%-------------------------------------------------------------------------
+%	THESIS MAIN TEXT
+%-------------------------------------------------------------------------
+
+% \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+% \mainmatter
+
+% \input{chapters/framing}
+% \input{chapters/framework}
+% \input{chapters/mises}
+% \input{chapters/datablade}
+% \input{chapters/database}
+% \input{chapters/AI}
+% \input{chapters/PCA}
+% \input{chapters/conclusions}
+
+% %-------------------------------------------------------------------------
+% %	BIBLIOGRAPHY
+% %-------------------------------------------------------------------------
+
+% \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+% \bibliography{biblio} % The references information are stored in the file named "Thesis_bibliography.bib"
+
+% %-------------------------------------------------------------------------
+% %	APPENDICES
+% %-------------------------------------------------------------------------
+
+% \cleardoublepage
+% \addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+% \appendix
+% \chapter{Appendix A}
+% If you need to include an appendix to support the research in your thesis, you can place it at the end of the manuscript.
+% An appendix contains supplementary material (figures, tables, data, codes, mathematical proofs, surveys, \dots)
+% which supplement the main results contained in the previous chapters.
+
+% \chapter{Appendix B}
+% It may be necessary to include another appendix to better organize the presentation of supplementary material.
+
+% ACKNOWLEDGEMENTS
+% \cleardoublepage
+% \thispagestyle{empty}
+% \epigraph{\textbf{Discipline, doing what you hate to do but do it like you love it.}}{\textit{Mike Tyson}}
+% \cleardoublepage
+
+\end{document}

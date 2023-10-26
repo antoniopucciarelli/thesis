@@ -1,0 +1,106 @@
+\RequirePackage[LGR, T1]{fontenc}
+
+%% Importing packages
+\ProvidesPackage{BearStyle}
+\ProvidesPackage{BearCodes}
+\RequirePackage{BearStyle}
+\RequirePackage{BearCodes}
+
+\hypersetup{
+    pdftoolbar = true,                                % show Acrobat’s toolbar?
+    pdfmenubar = true,                                % show Acrobat’s menu?
+    pdffitwindow = true,                              % window fit to page when opened
+    pdfstartview = {FitP},                            % fits the width of the page to the window
+    pdftitle = {Machine Learning for Turbomachinery}, % title
+    pdfsubject = {Turbomachinery project},            % subject of the document
+    pdfnewwindow = true,                              % links in new window
+    colorlinks = false,                               % false: boxed links; true: colored links
+    linkcolor = c-blue,                               % color of internal links (change box color with linkbordercolor)
+    citecolor = c-blue,                               % color of links to bibliography
+    filecolor = c-blue,                               % color of file links
+    urlcolor = magenta                                % color of external links
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% Standard headers:
+\DeclareOptionBeamer{american}
+{
+    \def \BearLang {eng}
+    \def \BearLangII {american}
+}
+\DeclareOptionBeamer{english}
+{
+    \def \BearLang {eng}
+    \def \BearLangII {english}
+}
+\DeclareOptionBeamer{UKenglish}
+{
+    \def \BearLangII {english}\def \BearLang {eng}
+    \def \BearLangII {UKenglish}
+}
+\DeclareOptionBeamer{USenglish}
+{
+    \def \BearLang {eng}
+    \def \BearLangII {USenglish}
+}
+\DeclareOptionBeamer{norsk}
+{
+    \def \BearLang {bm}
+    \def \BearLangII {norsk}
+    \pretolerance = 2000
+    \tolerance    = 6000
+    \hbadness     = 6000
+}
+\DeclareOptionBeamer{nynorsk}
+{
+    \def \BearLang {nn}
+    \def \BearLangII {nynorsk}
+    \pretolerance = 2000
+    \tolerance    = 6000
+    \hbadness     = 6000
+}
+\urlstyle{same}
+
+%% Vertical text alignment:
+\DeclareOptionBeamer{c}{ \beamer@centeredtrue  }
+\DeclareOptionBeamer{t}{ \beamer@centeredfalse }
+
+
+%% Theorem numbers, gets sent along to inner theme:
+\DeclareOptionBeamer{unnumbered}{\PassOptionsToPackage{unnumbered}{BearInnerTheme}}
+\DeclareOptionBeamer{numbered}  {\PassOptionsToPackage{numbered}{BearInnerTheme}}
+\DeclareOptionBeamer{AMS}       {\PassOptionsToPackage{AMS}{BearInnerTheme}}
+
+%% Font, gets sent along to fonttheme:
+\DeclareOptionBeamer{SansSerif}{\PassOptionsToPackage{SansSerif}{BearFonts}}
+\DeclareOptionBeamer{MathSerif}{\PassOptionsToPackage{MathSerif}{BearFonts}}
+\DeclareOptionBeamer{Serif}{\PassOptionsToPackage{Serif}{BearFonts}}
+
+%% Automatic title frame:
+\DeclareOptionBeamer{TitlePage}{\PassOptionsToPackage{TitlePage}{BearInnerTheme}}
+\DeclareOptionBeamer{NoTitlePage}{\PassOptionsToPackage{NoTitlePage}{BearInnerTheme}}
+
+\ExecuteOptionsBeamer{english}
+\ExecuteOptionsBeamer{t}
+\ExecuteOptionsBeamer{unnumbered}
+\ExecuteOptionsBeamer{SansSerif}
+\ExecuteOptionsBeamer{TitlePage}
+\ProcessOptionsBeamer
+
+\RequirePackage[\BearLangII]{babel}
+
+%% Allow more stretching
+\setlength{\emergencystretch}{3em}
+
+\mode<presentation>
+
+\usefonttheme{BearFonts}
+\usecolortheme{BearColours}
+\useoutertheme{BearOuterThemes}
+\useinnertheme[\BearLang]{BearInnerTheme}
+
+\mode<all>
+
+\endinput

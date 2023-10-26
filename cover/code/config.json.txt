@@ -1,0 +1,85 @@
+{
+"testNumber": 0, // test case number: optimization ID  
+"geometry": {  // geometry definition 
+  "x0": [      // initial guess setup 
+    2.842E+01, // stagger angle (in degrees)
+    -5.300E+01, // metal inlet angle (in degrees)
+    7.550E+01, // metal outlet angle (in degrees)
+    3.663E-01, // Kulfan parametrization A0 (equal for the suction side and pressure side)
+    5.994E-01, // Kulfan parametrization A1suct -> for the suction side (lower part)
+    6.504E-01, // Kulfan parametrization A2suct
+    6.268E-01, // Kulfan parametrization A3suct
+    5.173E-01, // Kulfan parametrization A4suct
+    4.958E-01, // Kulfan parametrization A5suct
+    5.081E-01, // Kulfan parametrization A6suct
+    6.151E-01, // Kulfan parametrization A7suct 
+    8.558E-01, // Kulfan parametrization A8suct 
+    7.865E-01, // Kulfan parametrization A1press ->  for the pressure side (upper part)
+    5.516E-01, // Kulfan parametrization A2press
+    6.878E-01, // Kulfan parametrization A3press
+    8.276E-01, // Kulfan parametrization A4press
+    1.005E+00, // Kulfan parametrization A5press
+    1.197E+00, // Kulfan parametrization A6press
+    1.594E+00, // Kulfan parametrization A7press
+    2.127E+00, // Kulfan parametrization A8press
+    1.094E+00  // blade pitch 
+],
+  "Nsuct":  8, // number of Kulfan parameters used at the suction side 
+  "Npress": 8, // number of Kulfan parameters used at the pressure side
+  "TEradius": 1.25E-2 // trailing edge radius
+},
+"aerodynamicDuty": { // aerodynamic duty properties -> macroscopic properties of the flow 
+  "alpha1": -50, // flow inlet angle (in degrees)
+  "alpha2": 72.5, // flow outlet angle (in degrees)
+  "MOUT": 0.7, // outlet Mach number (used at the boundary conditions for the MISES simulation)
+  "Reynolds": 6E+05 // Reynolds number (used for the turbulence model setup in MISES)
+},
+"aerodynamicStyle": { // aerodynamic style properties -> local load distribution of the load (expressed in Mach number fraction [M / Mte]) over the blade (surface length fraction [S / Stot])
+  "Mleading": 1.8, // leading edge Mach number fraction at the suction side 
+  "Mpeak": 1.4, // peak Mach number fraction at the suction side
+  "Mpress": 1.0, // peak Mach number fraction at the pressure side before raising
+  "Lpeak": 0.6, // position of the peak Mach number fraction on the suction side (expressed in surface fraction)
+  "LEfrac": 0.1, // position of the leading edge Mach number fraction at the suction side (expressed in surface fraction)
+  "PRESSfrac": 0.4 // position of Mach fraction raising at the pressure side (expressed in surface fraction)
+},
+    "aerodynamicStyleProperties": { // aerodynamic style properties for the sketching of the aerodynamic style target curve
+      "suctionSide": { // suction side properties 
+        "loadExtremes": [1.20, 1.80], // DOF that define the aerodynamic load on the SS
+        "machExtremes": [0.30, 0.50], // Mach number fraction (M1 / M2) for the scaling of the aerodynamic style curve
+        "dofValues":    [0.75, 0.55, 0.50, 0.50] // values at the interpolation nodes 
+      }, 
+      "pressureSide": { // pressure side properties 
+        "loadExtremes": [0.80, 1.0], // DOF that define the aerodynamic load on the PS
+        "machExtremes": [0.12, 0.3], // Mach number fraction (M1ax / M2) for the scaling of the aerodynamic style curve
+        "dofValues":    [0.35, 0.30, 0.20, 0.25] // values at the interpolation nodes
+      }
+    },
+"mises": { // MISES simulation properties 
+  "MINL":   0.2, // inlet Mach number guess (it will be corrected by MISES during simulation)
+  "PINL":   0.6, // inlet static pressure over total pressure guess (it will be corrected by MISES during simulation) 
+  "POUT":   0.2, // outlet static pressure over total pressure guess (it will be corrected by MISES during simulation)
+  "BCINL": -0.5, // inlet boundary conditions station
+  "BCOUT":  1.5, // outlet boundary conditions station
+  "nIter": -50,  // number of MISES iterations (check MISES user-guide for understanding the `-` sign)
+  "nCrit":  2.0, // transition critical number between e^n transition model and Abu-Ghannam-Shaw transition model
+  "Xtr1":   0.2, // transition position in chord percentage for the upper side of the blade (this value will be used as guess by MISES)
+  "Xtr2":   0.2  // transition position in chord percentage for the lower side of the blade (this value will be used as guess by MISES)
+},
+"cost": { // cost function properties -- cost = RMSE * [1.0 + factor * (max(0, |angleError - threshold|)) * 2.0]**exponent
+  "exponent":  1.5, // exponent of the cost function
+  "factor":    0.1, // factor of the cost function
+  "threshold": 0.4  // angle threshold of the cost function
+},
+"optimization": { // optimization properties
+"method": { 
+    "method": "Nelder-Mead", // enables Nelder-Mead simplex method
+    "tol":    0.025, // cost function tolerance
+    "PITCH":  null, // enables pitch as DOF treated by the optimization algorithm
+    "iterationTol": 1000, // max number of iteration 
+    "stdDeviationTol": 1E-1, // max value for the standard distribution of the error
+    "metalInBounds": 4, // bounds for the inlet metal angles
+    "metalOutBounds": 4, // bounds for the outlet metal angles
+    "Nsuct":  8, // suction side number of DOF
+    "Npress": 8  // pressure side number of 
+  }
+}

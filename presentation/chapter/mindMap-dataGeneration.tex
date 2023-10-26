@@ -1,0 +1,36 @@
+\begin{frame}{Steps}
+    \vspace{-1.5cm}
+    \begin{figure}
+        \vspace{0.5cm}
+        \centering
+            \begin{tikzpicture}[
+                mindmap,
+                every node/.style=concept,
+                concept color=black!20,
+                grow cyclic,
+                level 1/.append style={level distance=8cm, sibling angle=40, font=\small},
+                level 2/.append style={level distance=5cm, sibling angle=27, font=\small}
+                ]
+                \node [root concept, scale=0.85] {{\LARGE\textbf{Data-Driven Design}}} % root
+                    child [concept color=yellow!10, scale=0.5] { node (c1) {\textbf{Machine \\ Learning}}
+                        child [rotate=40] { node [scale=0.6] {\textbf{PCA}} }
+                        child [rotate=40] { node [scale=0.6] {\textbf{RBF}} }
+                    }
+                    child [concept color=orange, scale=0.5] { node [level distance=9cm] (c2) {\textbf{Database \\ Generation}} 
+                        child [level distance=6cm] { node [scale=0.6, distance=10cm] {\textbf{Strategy}} }
+                        child [level distance=6cm] { node [scale=0.6, distance=10cm] {\textbf{Flow Solver}} }
+                        child [level distance=6cm] { node [scale=0.6, distance=10cm] {\textbf{Optimizer}} }
+                    }
+                    child [concept color=red!10, scale=0.5] { node (c3) {\textbf{Data \\ Setup}}
+                    child [rotate=-30] { node [scale = 0.6] {\textbf{Style}} }
+                    child [rotate=-30] { node [scale = 0.6] {\textbf{Duty}} }
+                    child [rotate=-30] { node [scale = 0.6] {\textbf{Blade}} } 
+                    };
+                \begin{pgfonlayer}{background}
+                    \draw [concept connection]  (c1) edge (c2)
+                                                     edge (c3)
+                                                (c2) edge (c3);
+                    \end{pgfonlayer}
+            \end{tikzpicture}
+    \end{figure}
+\end{frame}

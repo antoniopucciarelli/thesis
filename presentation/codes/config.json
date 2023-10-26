@@ -1,0 +1,70 @@
+{
+    "testNumber": 1,
+    "geometry": {
+        "x0": [
+            25, 	
+            -50, 	
+            65, 	
+            0.3, 	
+            0.3,
+            0.3,
+            0.3,
+            0.3,
+            0.3,
+            0.3,
+            20,
+            0.9 	
+        ],
+        "Nsuct":    3,
+        "Npress":   3,
+        "TEradius": 0.025
+    },
+    "aerodynamicDuty": {
+        "alpha1":   -50.0,
+        "alpha2":   65.0,
+        "MOUT":     0.4,
+        "Reynolds": 600000.0
+    },
+    "aerodynamicStyle": {
+        "Mleading":  1.8,
+        "Mpeak":     1.2,
+        "Mpress":    0.8,
+        "Lpeak":     0.6,
+        "LEfrac":    0.1,
+        "PRESSfrac": 0.4
+    },
+    "mises": {
+        "MINL":  0.2,
+        "PINL":  0.0,
+        "POUT":  0.68,
+        "BCINL": -1.0,
+        "BCOUT": 1.8,
+        "nIter": -50,
+        "nCrit": 4.0,
+        "Xtr1":  0.1,
+        "Xtr2":  0.2
+    },
+    "optimization": {
+        "method": [
+            {
+                "method":          "Nelder-Mead",
+                "tol":             0.025,
+                "PITCH":           null,
+                "RMSEside":        "BOTH",
+                "iterationTol":    1500,
+                "stdDeviationTol": 0.1,
+                "metalInBounds":   3,
+                "metalOutBounds":  3,
+                "normalization":   false,
+                "adaptive":        true,
+                "Nsuct":           8,
+                "Npress":          8,
+                "cost": {
+                    "exponent":  2.0,
+                    "factor":    0.01,
+                    "threshold": 0.0
+                }
+            }
+        ]
+    }
+}

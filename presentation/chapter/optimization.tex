@@ -1,0 +1,133 @@
+\subsection{Optimization}
+
+\begin{frame}
+    \frametitle<1>{Nelder-Mead -- Simplex Method \Romannum{1}}
+    \frametitle<2>{Nelder-Mead -- Simplex Method \Romannum{2}}
+    \frametitle<3>{Nelder-Mead -- Simplex Method \Romannum{3}}
+    \frametitle<4>{Nelder-Mead -- Simplex Method \Romannum{4}}
+    \frametitle<5>{Nelder-Mead -- Simplex Method \Romannum{5}}
+    \frametitle<6>{Nelder-Mead -- Simplex Method \Romannum{6}}
+    
+    \only<1>{
+        \begin{columns}
+            \column{0.5\textwidth}
+                \begin{figure}[h!]
+                    \input{./flowchart/simplex-00}
+                    % \input{images/nelder-mead/geogebra-export}
+                \end{figure}
+            \column{0.55\textwidth}
+                \begin{itemize}
+                    \item The \color{red} X \color{black} point is the local minima.
+                    \item The triangle points are the starting point of the optimization.
+                    \item Each triangle point has a cost. 
+                \end{itemize}
+            \end{columns}
+    }
+    \only<2>{
+        \begin{columns}
+        \column{0.5\textwidth}
+                \begin{figure}[h!]
+                    \input{./flowchart/simplex-01}
+                    % \input{images/nelder-mead/geogebra-export1}
+                \end{figure} 
+            \column{0.55\textwidth}
+            \begin{itemize}
+                \item The \color{red} X \color{black} point is the local minima.
+                {\transparent{0.4}
+                \item The triangle points are the starting point of the optimization.
+                \item Each triangle point has a cost. 
+                }
+                \item A new point is computed mirroring the point with highest cost.
+                \item The cost of the new point is computed.
+            \end{itemize}
+        \end{columns}
+    \begin{figure}
+    \end{figure}
+    }
+    \only<3>{
+        \begin{columns}
+        \column{0.5\textwidth}
+                \begin{figure}[h!]
+                    \input{./flowchart/simplex-02}
+                    % \input{images/nelder-mead/geogebra-export2}
+                \end{figure} 
+            \column{0.55\textwidth}
+            \begin{itemize}
+                \item The \color{red} X \color{black} point is the local minima.
+                {\transparent{0.4}
+                \item The triangle points are the starting point of the optimization.
+                \item Each triangle point has a cost. 
+                \item A new point is computed mirroring the point with highest cost.
+                \item The cost of the new point is computed.
+                } 
+                \item If the cost of the new point is greater than its parent, a new point is found over their conjunction line.
+                \item The cost of the new point is computed.
+            \end{itemize}
+         \end{columns}
+    }
+    \only<4>{
+        \begin{columns}
+            \column{0.5\textwidth}
+                    \begin{figure}[h!]
+                        \input{./flowchart/simplex-03}
+                        % \input{images/nelder-mead/geogebra-export3}
+                    \end{figure} 
+            \column{0.55\textwidth}
+            \begin{itemize}
+                \item The \color{red} X \color{black} point is the local minima.
+                {\transparent{0.4}
+                \item The triangle points are the starting point of the optimization.
+                \item Each triangle point has a cost. 
+                \item A new point is computed mirroring the point with highest cost.
+                \item The cost of the new point is computed.
+                \item If the cost of the new point is greater than its parent, a new point is found over their conjunction line.
+                \item The cost of the new point is computed.
+                }
+                \item A new study triangle is generated for the next optimization step. 
+            \end{itemize}
+        \end{columns}
+    }
+    \only<5>{
+        % \vspace{-1.2cm} 
+        \begin{columns}
+            \column{0.5\textwidth}
+                \begin{figure}[h!]
+                    \input{./flowchart/simplex-04}
+                    % \input{images/nelder-mead/geogebra-export4}
+                \end{figure} 
+            \column{0.55\textwidth}
+            \begin{itemize}
+                \item The \color{red} X \color{black} point is the local minima.
+                {\transparent{0.4}
+                \item ...
+                \item The cost of the new point is computed.
+                \item If the cost of the new point is greater than its parent, a new point is found over their conjunction line.
+                \item The cost of the new point is computed.
+                \item A new study triangle is generated for the next optimization step. 
+                }
+                \item The algorithm is repeated till convergence is reached.        
+            \end{itemize}
+        \end{columns}
+    }
+    \only<6>{
+        \begin{columns}
+            \column{0.5\textwidth}
+                    \begin{figure}[h!]
+                        \input{./flowchart/simplex-05}
+                        % \input{images/nelder-mead/geogebra-export5}
+                    \end{figure} 
+                \column{0.55\textwidth}
+                \begin{itemize}
+                    \item The \color{red} X \color{black} point is the local minima.
+                    {\transparent{0.4}
+                    \item ...
+                    \item The cost of the new point is computed.
+                    \item If the cost of the new point is greater than its parent, a new point is found over their conjunction line.
+                    \item The cost of the new point is computed.
+                    \item A new study triangle is generated for the next optimization step. 
+                    }
+                    \item The algorithm is repeated till convergence is reached.        
+                \end{itemize}
+            \end{columns}
+    }
+\end{frame}

@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel=$\frac{L}{L_{surf}}$,
+        ylabel=$\frac{M}{M_{TE}}$,
+        title={\textit{Applicable} load},
+        grid=both,
+        minor grid style={gray!25},
+        major grid style={gray!25},
+        width=0.75\linewidth,
+        no marks
+    ]
+
+    \addplot[line width=1.5pt,solid,color=blue] table[x=xSuct, y=ySuct, col sep=comma]{tikz/csv/applicableLoad.csv};
+    \addlegendentry{Suction side};
+    
+    \addplot[line width=1.5pt,solid,color=red] table[x=xPress, y=yPress, col sep=comma]{tikz/csv/applicableLoad.csv};
+    \addlegendentry{Pressure side};
+
+    \end{axis}
+\end{tikzpicture}

@@ -1,0 +1,9 @@
+1 2 5 6 15 ! INL SLOPE | EXIT SLOPE | LE STAGNATION | EXIT PRESSURE | INL MACH 
+1 3 4 6 17 ! INL SLOPE DRIVE | LE/TE KUTTA | INL P0/P0r DRIVE | OUT MACH DRIVE
+0.25 0. 1.3 -0.5 ! INL MACH  | INL  P1/P0a | INL SLOPE | INL POSITION 
+1.10 0.68 0. 1.3 ! OUT MACH  | OUT P2/P0a  | OUT SLOPE | OUT POSITION
+0.   0.          ! MFRin     | HWRAT       | 
+6E+5 4.0         ! REYNOLDS  | NCRIT       | 
+0.15 0.15        ! XTRANS1   | XTRANS2     | 
+4    0.9 1.0     ! ISMOM     | MCRIT       | MUCON         
+0.   0.          ! BVR1in    | BVR2in      |     

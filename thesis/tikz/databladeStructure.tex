@@ -1,0 +1,51 @@
+\begin{figure}[!h]
+  \tikzstyle{every node}=[draw=black,thick,anchor=west]
+  \tikzstyle{selected}=[draw=red,fill=red!30]
+  \tikzstyle{optional}=[dashed,fill=gray!50]
+  \tikzstyle{plain}=[draw=none,anchor=west]
+  \begin{minipage}{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      grow via three points={one child at (0.5,-0.7) and
+      two children at (0.5,-0.7) and (0.5,-1.4)},
+      edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)},
+      scale=1]
+      \texttt{
+      \node {datablade}
+        child { node {docs}}		
+        child { node {misc}}
+        child { node {module}}
+        child { node [selected] {src}}
+        child { node {test}}
+        child { node [plain] {LICENSE}}
+        child { node [plain] {setup.py}}
+        child { node [plain] {setup.cfg}}
+        child { node [plain] {README.md}};
+      }
+    \end{tikzpicture}
+  \end{minipage}
+  \begin{minipage}{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      font=\scriptsize,
+      grow via three points={one child at (0.5,-0.7) and
+      two children at (0.5,-0.7) and (0.5,-1.4)},
+      edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)},
+      scale=1]
+      \texttt{
+      \node [selected] {datablade/src}
+        child { node {compileLIB}}
+        child { node {databaseLIB}}
+        child { node {execLIB}}
+        child { node {kulfanLIB}}
+        child { node {loadLIB}}
+        child { node {misesLIB}}
+        child { node {optimizationLIB}}
+        child { node {performanceLIB}}
+        child { node {postProcessingLIB}};
+      }
+    \end{tikzpicture}
+  \end{minipage}
+  \caption{\texttt{datablade} structure}
+  \label{fig:databladeStructure}
+\end{figure}

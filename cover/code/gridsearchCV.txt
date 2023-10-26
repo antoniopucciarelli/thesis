@@ -1,0 +1,24 @@
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.model_selection import GridSearchCV
+
+# RBF kernel allocation
+kernel = 1.0 * RBF(length_scale=1.0)
+
+# Gaussian Process Regressor generation
+gp = GaussianProcessRegressor(kernel=kernel)
+
+# grid parameters for hyperparameter tuning
+param_grid = {
+    'kernel__length_scale': [0.1, 1.0, 10.0],
+    'alpha': [1e-1, 1e-2, 1e-3],
+    'n_restarts_optimizer': [0, 1, 2]
+}
+
+# grid search computation
+grid_search = GridSearchCV(gp, param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+
+# best parameters and best estimator
+best_params = grid_search.best_params_
+best_estimator = grid_search.best_estimator_

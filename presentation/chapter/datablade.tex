@@ -1,0 +1,103 @@
+\begin{frame}{\texttt{datablade} structure}
+    \tikzstyle{every node}=[draw=black,thick,anchor=west]
+    \tikzstyle{selected}=[draw=red,fill=red!30]
+    \tikzstyle{optional}=[dashed,fill=gray!50]
+    \tikzstyle{plain}=[draw=none,anchor=west]
+    
+    \vspace{0.5cm}
+    \begin{columns}
+        % \column{0.25\textwidth}
+        %     \begin{tikzpicture}[%
+        %         grow via three points={one child at (0.5,-0.7) and
+        %         two children at (0.5,-0.7) and (0.5,-1.4)},
+        %         edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+        %         \texttt{
+        %         \node {datablade}
+        %             child { node {docs}}		
+        %             child { node {misc}}
+        %             child { node {module}}
+        %             child { node [selected] {src}}
+        %             child { node {test}}
+        %             child { node [plain] {LICENSE}}
+        %             child { node [plain] {setup.py}}
+        %             child { node [plain] {setup.cfg}}
+        %             child { node [plain] {README.md}};
+        %         }
+        %     \end{tikzpicture}
+        \column{0.5\textwidth}
+            \begin{tikzpicture}[%
+                font=\scriptsize,
+                grow via three points={one child at (0.5,-0.7) and
+                two children at (0.5,-0.7) and (0.5,-1.4)},
+                edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+                \texttt{
+                \node [] {datablade/src}
+                    child { node {compileLIB}}
+                    child { node {databaseLIB}}
+                    child { node {execLIB}}
+                    child { node {kulfanLIB}}
+                    child { node {loadLIB}}
+                    child { node {misesLIB}}
+                    child { node {optimizationLIB}}
+                    child { node {performanceLIB}}
+                    child { node {postProcessingLIB}};
+                }
+            \end{tikzpicture}
+        \column{0.5\textwidth}
+            \vspace{-7cm}
+            \begin{itemize}
+                \item \texttt{kulfanLIB} 
+                    \begin{itemize}
+                        \item Camberline setup
+                        \item Blade setup
+                    \end{itemize}
+                \item \texttt{loadLIB}
+                    \begin{itemize}
+                        \item Load generator
+                        \item \texttt{MISES} loading post-processing
+                    \end{itemize}
+                \item \texttt{misesLIB}
+                    \begin{itemize}
+                        \item \texttt{ISES} pre-processing
+                        \item \texttt{ISET} pre-processing
+                    \end{itemize}
+                \item \texttt{optimizationLIB}
+                    \begin{itemize}
+                        \item optimization 
+                        \item data management
+                    \end{itemize}
+                \item \texttt{performanceLIB}
+                    \begin{itemize}
+                        \item cost function computation
+                    \end{itemize}
+            \end{itemize}
+    \end{columns}
+\end{frame} 
+
+\begin{frame}[fragile]{\texttt{datablade} configuration file}
+    \begin{columns}
+        \column{0.25\textwidth}
+        \lstinputlisting[style=custom, firstline=1, lastline=35]{codes/config.json}
+        \column{0.4\textwidth}
+        \lstinputlisting[style=custom, firstline=36, firstnumber=36]{codes/config.json}
+        \column{0.35\textwidth}
+        \\ [0.2cm]
+        \texttt{datablade} optimizations are setup through a \texttt{JSON} file. 
+        \\ [0.2cm]
+        This file configures: 
+        \begin{itemize}
+            \item Initial guess
+            \item Objectives
+            \item Constraints
+            \item Flow solver properties 
+            \item Dimensionality \& scaling
+            \item Optimization method
+            \item Tolerances
+            \item Cost function 
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Flow chart}
+    \input{flowchart/structure.tex}
+\end{frame}

@@ -1,0 +1,184 @@
+\newcommand\WIDTH{3cm}
+\newcommand\HEIGHT{1.25cm}
+\newcommand\Ydist{0.2cm}
+\newcommand\XPOS{2cm}
+\newcommand\TOTheight{6.2cm}
+\newcommand\TOTwidth{3.4cm}
+\newcommand\PTS{1.2pt}
+\newcommand\SHADOWred{50}
+\newcommand\SHADOWgreen{30}
+\newcommand\SHADOWblue{20}
+
+\vspace{-0.5cm}
+
+\begin{tikzpicture}
+    
+    \node[draw,
+        rectangle,
+        % rounded corners,
+        line width = \PTS,
+        minimum height = \TOTheight,
+        minimum width = \TOTwidth
+    ] (man) at (0, 0) {};
+
+    \node[draw,
+        rectangle,
+        % rounded corners,
+        line width = \PTS,
+        minimum height = \TOTheight,
+        minimum width = \TOTwidth,
+        right = \XPOS of man
+    ] (auto) {};
+
+    \node[draw,
+        rectangle,
+        % rounded corners,
+        line width = \PTS,
+        minimum height = \TOTheight,
+        minimum width = \TOTwidth,
+        right = \XPOS of auto
+    ] (ml) {};
+
+    \node[draw, 
+        rectangle,
+        fill = blue!\SHADOWblue,
+        line width = \PTS,
+        minimum height = 0.8cm,
+        above right = -\PTS and 0cm of man.north west
+    ] (manTitle) {\textbf{\small{Manual}}};
+
+    \node[draw, 
+        rectangle,
+        fill = blue!\SHADOWblue,
+        line width = \PTS,
+        minimum height = 0.8cm,
+        above right = -\PTS and 0cm of auto.north west
+    ] (autoTitle) {\textbf{\small{Automated}}};
+
+    \node[draw, 
+        rectangle,
+        fill = blue!\SHADOWblue,
+        line width = \PTS,
+        minimum height = 0.8cm,
+        above right = -\PTS and 0cm of ml.north west
+    ] (mlTitle) {\textbf{\small{Machine learning}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT, 
+        % fill = red!\SHADOWred,
+        below = \Ydist of man.north
+    ] (manCFD) {\textbf{\small{Iterative CFD}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of manCFD
+    ] (manObj) {\makecell[c]{\textbf{\small{Objectives \&}} \\ \textbf{\small{constraints}}}};%{\textbf{\small{Objectives \& constraints}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of manObj,
+        fill = green!\SHADOWgreen
+    ] (manKnow) {\makecell[c]{\textbf{\small{Using prior}} \\ \textbf{\small{knowledge}}}}; %{\textbf{Using prior knowledge}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of manKnow,
+        % fill = red!\SHADOWred
+    ] (manMan) {\textbf{\small{Manual}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT, 
+        below = \Ydist of auto.north,
+        % fill = red!\SHADOWred
+    ] (autoCFD) {\textbf{\small{Iterative CFD}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of autoCFD
+    ] (autoObj) {\makecell[c]{\textbf{\small{Objectives \&}} \\ \textbf{\small{constraints}}}};%{\textbf{\small{Objectives \& constraints}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of autoObj,
+        % fill = red!\SHADOWred
+    ] (autoKnow) {\makecell[c]{\textbf{\small{Not using prior}} \\ \textbf{\small{knowledge}}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of autoKnow,
+        fill = green!\SHADOWgreen
+    ] (autoAuto) {\textbf{\small{Automated}}}; 
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT, 
+        below = \Ydist of ml.north,
+        fill = green!\SHADOWgreen
+    ] (mlCFD) {\textbf{\small{Regression}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of mlCFD,
+        % fill = green!\SHADOWgreen
+    ] (mlObj) {};%{\makecell[c]{\textbf{\small{Aerodynamic duty \&}} \\ \textbf{\small{aerodynamic style}}}};%{\textbf{\small{Objectives \& constraints}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of mlObj,
+        fill = green!\SHADOWgreen
+    ] (mlKnow) {\makecell[c]{\textbf{\small{Using prior}} \\ \textbf{\small{knowledge}}}};
+
+    \node[draw,
+        rectangle,
+        rounded corners,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        below = \Ydist of mlKnow,
+        fill = green!\SHADOWgreen
+    ] (mlAuto) {\textbf{\small{Automated}}}; 
+ 
+\end{tikzpicture}

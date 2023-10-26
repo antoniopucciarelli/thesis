@@ -1,0 +1,99 @@
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Define Colors %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Primary
+\definecolor{c-yellow}{RGB}{255, 220, 0}
+\definecolor{c-VKI}{RGB}{0, 65, 252}
+
+%% Secondary
+\definecolor{c-red}{RGB}{224, 45, 0}
+\definecolor{c-blue}{RGB}{0, 122, 204}
+
+%% Tertiary
+\definecolor{c-lightblue}{RGB}{64, 228, 255}
+\definecolor{c-darkred}{RGB}{153, 0, 43}
+\definecolor{c-darkblue}{RGB}{0, 0, 100}
+\definecolor{c-orange}{RGB}{255, 129, 0}
+
+%% Basic black/white/gray
+\definecolor{c-gray}{cmyk}{0, 0, 0, 0.2}
+\definecolor{c-black}{rgb}{0, 0, 0}
+\definecolor{c-white}{rgb}{1, 1, 1}
+
+%% Setting up alert colour
+\colorlet{alert}{c-red}
+\colorlet{beameralert}{alert}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Set up Colors %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamercolor*{normal text}{fg = c-black, bg = c-white}
+\setbeamercolor*{alerted text}{fg = c-red}
+\setbeamercolor*{example text}{fg = c-blue}
+
+\setbeamercolor*{structure}{fg = c-VKI}
+\setbeamercolor*{local structure}{fg = c-VKI}
+
+\setbeamercolor{white on VKI}{fg = c-white, bg = c-VKI}
+\setbeamercolor{black on red}{fg = c-white, bg = c-red}
+
+\setbeamercolor*{palette primary}{use = structure, fg = structure.fg}
+\setbeamercolor*{palette secondary}{use = structure,fg = structure.fg!75!c-red}
+\setbeamercolor*{palette tertiary}{use = structure, fg = structure.fg!50!c-red}
+\setbeamercolor*{palette quaternary}{fg = c-red}
+
+\setbeamercolor*{palette sidebar secondary}{fg = !20!c-VKI}
+\setbeamercolor*{palette sidebar quarternary}{fg = !20!c-VKI}
+
+\setbeamercolor{textlike}{parent = normal text}
+\setbeamercolor*{titlelike}{parent = textlike}
+
+\setbeamercolor*{title in head/foot}{parent = title}
+\setbeamercolor*{title in sidebar}{parent = title}
+
+\setbeamercolor*{author}{parent = textlike}
+\setbeamercolor*{author in head/foot}{parent = author}
+
+\setbeamercolor*{institute}{parent = textlike}
+\setbeamercolor*{institute in head/foot}{parent = institute}
+
+\setbeamercolor*{date}{parent = textlike}
+\setbeamercolor*{date in head/foot}{parent = date}
+
+\setbeamercolor*{section in toc}{parent = textlike}
+\setbeamercolor*{section in head/foot}{parent = section}
+
+\setbeamercolor*{headline}{parent = white on VKI}
+\setbeamercolor*{footline}{parent = white on VKI}
+
+\setbeamercolor*{block body}{bg = c-gray}
+\setbeamercolor*{block body alerted}{parent = block body}
+\setbeamercolor*{block body example}{parent = block body}
+\setbeamercolor*{block title}{parent = white on VKI}
+\setbeamercolor*{block title alerted}{use = alerted text, bg = alerted text.fg, fg = c-white}
+\setbeamercolor*{block title example}{use = example text, bg = example text.fg, fg = c-white}
+
+\setbeamercolor*{item projected}{parent = white on VKI}
+
+\setbeamercolor*{description item}{parent = structure}
+
+\setbeamercolor*{bibliography item}{fg = c-black}
+
+\setbeamercolor*{bibliography entry author}{parent = textlike}
+\setbeamercolor*{bibliography entry title}{parent = textlike}
+\setbeamercolor*{bibliography entry location}{parent = textlike}
+\setbeamercolor*{bibliography entry note}{parent = textlike}
+
+\setbeamercolor*{abstract title}{parent=titlelike}
+
+\setbeamercolor*{qed symbol}{parent = local structure}
+
+%% Title page and section page should be black on yellow
+\setbeamercolor*{title page}{parent = white on VKI}
+\setbeamercolor*{section page}{parent = white on VKI}
+\mode
+<all>

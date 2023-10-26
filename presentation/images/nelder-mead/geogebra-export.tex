@@ -1,0 +1,27 @@
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm, scale=0.2]
+\begin{axis}[
+x=1cm,y=1cm,
+axis lines=middle,
+xmin=-11.683021640762064,
+xmax=12.26720503650467,
+ymin=-5.6693032180788805,
+ymax=21.957373211560604,
+xtick={-10,-8,...,10},
+ytick={-4,-2,...,20},]
+\clip(-11.683021640762064,-5.6693032180788805) rectangle (32.26720503650467,21.957373211560604);
+\fill[line width=2pt,color=zzttqq,fill=zzttqq,fill opacity=0.19] (1.178695284830076,8.298938503258006) -- (-1.8923022147095834,-3.0058928718589892) -- (9.813094051651728,6.874707778833817) -- cycle;
+\draw [line width=2pt,color=zzttqq] (1.178695284830076,8.298938503258006)-- (-1.8923022147095834,-3.0058928718589892);
+\draw [line width=2pt,color=zzttqq] (-1.8923022147095834,-3.0058928718589892)-- (9.813094051651728,6.874707778833817);
+\draw [line width=2pt,color=zzttqq] (9.813094051651728,6.874707778833817)-- (1.178695284830076,8.298938503258006);
+\begin{scriptsize}
+\draw [fill=ffqqqq] (3,2) circle (2.5pt);
+\draw[color=ffqqqq] (3.234809868492963,2.6072244558058455) node {$X$};
+\draw [fill=ududff] (1.178695284830076,8.298938503258006) circle (2.5pt);
+\draw[color=ududff] (0.19386729160636174,8.516980784472237) node {cost = 1};
+\draw [fill=ududff] (-1.8923022147095834,-3.0058928718589892) circle (2.5pt);
+\draw[color=ududff] (-0.838905659034371,-3.3312200103783427) node {cost = 2};
+\draw [fill=ududff] (9.813094051651728,6.874707778833817) circle (2.5pt);
+\draw[color=ududff] (11.324864648512037,7.082573908582335) node {cost = 0.3};
+\end{scriptsize}
+\end{axis}
+\end{tikzpicture}

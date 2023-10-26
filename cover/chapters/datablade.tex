@@ -1,0 +1,138 @@
+\chapter{\texttt{datablade}}
+\label{chapter:code}
+
+This chapter introduces the \textbf{code} developed for the \textbf{database generation} and \textbf{analysis}. 
+It will also explain the main aspects of the \textbf{code} in terms of \textbf{blade generation} and \textbf{optimization strategy}.
+The code has been named \texttt{datablade}.
+
+\section{Structure}
+
+Figure~\ref{fig:databladeStructure} represents the directory subdivision of \texttt{datablade}. 
+The program structure is based on blocks that can be combined for different purposes.  
+
+\input{tikz/databladeStructure}
+
+\section{Configuration File}
+
+\texttt{datablade} optimization is configured using a \textbf{configuration file}. The configuration file is in \texttt{.json} format for allowing better \textbf{reading} and \textbf{handability}.
+
+The following listings are parts of the configuration file - \texttt{config.json} - used in  \texttt{datablade}. All the dictionary entries are called \textit{as closer as possible} to the physical variables.
+
+Listing~\ref{listing:configGuess} initilizes the initial guess for the blade optimization. Starting from its geometry - camberline, suction side and pressure side properties - and 
+allocating the pitch and the trailing edge radius (which is kept constant at $R_{TE} = 1.25 \cdot 10^{-2}$ for the whole database).
+
+\lstinputlisting[language=json, firstline=2, lastline=30, caption=\texttt{config.json} structure: initial guess ($\boldsymbol{x}_0$)., label=listing:configGuess]{./code/config.json.txt}
+
+Listing~\ref{listing:configAero} defines the aerodynamic style and aerodynamic duty of the blade.
+
+\lstinputlisting[language=json, firstline=31, lastline=44, caption=\texttt{config.json} structure: aerodynamic style and aerodynamic duty setup., label=listing:configAero]{./code/config.json.txt}
+
+Listing~\ref{listing:configMises} sets the \texttt{MISES} simulation's entries and defines the parameters used in the cost function.
+
+\lstinputlisting[language=json, firstline=57, lastline=72, caption=\texttt{config.json} structure: \texttt{MISES} configuration and cost function parameters., label=listing:configMises]{./code/config.json.txt}
+
+At the end of \texttt{config.json}, in Listing~\ref{listing:configOpt}, there is the definition of the optimization strategy used in \texttt{datablade}.
+
+\lstinputlisting[language=json, firstline=73, lastline=115, caption=\texttt{config.json} structure: optimization strategy setup., label=listing:configOpt]{./code/config.json.txt}
+
+\section{Optimization}
+
+The optimization algorithm used in \texttt{datablade} is a classic \textbf{gradient-free} method. 
+The method used is the \textbf{Simplex} method~\cite{nelder1965simplex}. 
+Even though the method finds the \textbf{local minima}, satisfactory results can be guaranteed using:
+
+\begin{itemize}
+    \item an appropriate choice of the initial guess, $\boldsymbol{x}_0$ 
+    \item a \textbf{dimensionality adaptation strategy} for the problem
+    \item an appropriate cost function which guarantees reliable results
+\end{itemize}
+
+\subsection{Dimensionality Adaptation}
+
+% The blade optimization is a multi dimensional optimization problem which translates in a high cost in time and resources for 
+% the computation of the optimum. Because of this problem, it is necessary to find a \textit{smart} way for the optimization of the blades. 
+% The optimization strategy adapted in this work allows reaching good results for the generation of data that will be part of the database.
+% This strategy consists in optimizing the blade varying the dimensionality of the problem. 
+
+% The optimizer starts optimizing a blade parametrized with few parameters. 
+% A low degree of freedom blade cannot generate a satisfactory result but, on the other hand, 
+% it allows to flatten the design space avoiding \textit{bad design intervals} - in which normally the optimizer fails to converge.
+% Once the low parameters optimization has converged, it is very likely that an increase in degree of freedom generates a better solution. 
+
+% It has been tested that the best performance are reached doubling the degree of freedom of the blade parametrization after every optimization.
+
+% If a blade converged with a low degree of freedom parametrization, the computed blade is scaled such that the database
+% is populated by blade parametrized with the same number of parameters.
+
+The optimization of blades poses a challenging multidimensional optimization problem, demanding significant time and resources to attain the optimal solution. Given this complexity, an \textit{intelligent approach} is necessary to streamline blade optimization. The strategy employed in this study demonstrates the ability to yield \textit{favorable outcomes} for constructing the database. This strategy involves optimizing blades by \textbf{manipulating the dimensionality of the problem}~\cite{clark2019step}.
+
+The optimization process initiates by optimizing a blade with a \textbf{limited set of parameters}. While a blade with restricted degrees of freedom \textbf{may not produce an ideal outcome}, it does contribute to \textbf{flattening the design space}, thereby \textbf{mitigating unfavorable design intervals} where the optimizer might struggle to converge. Once optimization with fewer parameters achieves convergence, it's highly probable that increasing the degree of freedom will lead to \textbf{improved solutions}.
+
+Empirical tests have revealed that the most favorable outcomes are achieved by \textbf{doubling} the degree of freedom in blade parametrization after each optimization cycle. Should a blade successfully converge with a low degree of freedom parametrization, the computed blade is subsequently scaled to populate the database with blades parametrized with the same number of parameters.
+
+\subsection{Cost Function}
+
+The blade optimization is related to two main errors: 
+
+\begin{itemize}
+    \item the \textbf{load error} over the blade, which is computed as the root mean squared error over the loading 
+    \item the \textbf{flow exit angle error}
+\end{itemize}
+
+The root mean squared error is computed using Equation~(\ref{eqn:RMSE}).
+The exit angle flow error is then computed using Equation~(\ref{eqn:angleError}). 
+
+\begin{align}
+    RMSE            & = \sqrt{\frac{1}{N_{points}} \cdot \sum_{i = 1}^{N_{points}} \Bigg( \frac{M_{real}}{M_{TE, real}} \Bigg|_{i} - \frac{M_{target}}{M_{TE, target}} \Bigg|_{i} \Bigg)^2} 
+    \label{eqn:RMSE} \\ 
+    \Delta \alpha_2 & = \Big| \alpha_{2, real} - \alpha_{2, target} \Big| 
+    \label{eqn:angleError} 
+\end{align}
+
+Equation~(\ref{eqn:RMSE}) gets the Mach fraction distribution along the blade using 
+the \texttt{.dat} file computed by \texttt{EDP} module in \texttt{MISES} and the Mach 
+fraction distribution using the aerodynamic style curve computed in Chapter~\ref{chapter:framework}.
+
+Once $RMSE$ and $\Delta \alpha_2$ have been computed, the cost function, Equation~(\ref{eqn:costFunction}), is a blend of those properties.
+It is important that the cost function relates the $RMSE$ and $\Delta \alpha_2$ with a \textbf{product}; this in order
+to reduce the \textit{competition} between the two variables during the optimization.
+
+\begin{equation}
+    cost = RMSE \cdot \Big[ 1 + 0.04 \cdot \Big( max \Big( 0, \ \Delta \alpha_2 - 1.0 \Big) \Big)^{2.0} \Big]
+    \label{eqn:costFunction}
+\end{equation}
+
+Equation~\ref{eqn:costFunction} features the product between the $RMSE$ with another term which is a blend of different quantities.
+The $0.04$ factor represents a scale which adapts the angle error to the overall cost function, it dictates how important the angle error, 
+$\Delta \alpha_2$, should be compared to the $RMSE$. The scaling value acts on the terms in round parenteses. 
+The value in the round parenteses is a threshold switch for the angle error. The threshold is set up by the 
+$max(0, \ \Delta \alpha_2 - 1.0 )$ term. Once $ \Delta \alpha_2 - 1.0 > 0$, the switch activates and $\Delta \alpha_2$ contributes to the cost function.
+On top of that, the \textit{switch} is \textbf{squared}; this in order to allow a \textbf{smooth transition of the error} from a region where \textit{just}
+$RMSE$ contributes to the cost function - for $ \Delta \alpha_2 - 1.0 \leq 0$ - to the region where both $RMSE$ and $\Delta \alpha_2$ contribute to the overall cost function
+- for $ \Delta \alpha_2 - 1.0 > 0$.
+
+% The cost function has a double purpose. On one hand it generates a \textit{law} which 
+% defines the convergence properties of the optimization algorithm. On the other hand 
+% it provides a \textit{threshold of acceptability} for the optimized blades. If the value
+% of the cost function for an optimized blade is high, this blade can be not taken into account 
+% in order to have a more accurate database.
+
+The cost function serves a dual purpose. Firstly, it establishes a \textit{guideline} governing the convergence behavior of 
+the optimization algorithm. Secondly, it provides a \textit{threshold of acceptability} for the optimized blades. 
+If the cost function value for an optimized blade is high, that particular blade might be excluded to ensure a more precise database.
+
+\section{Optimizer}
+
+On top of the optimization strategy there is the optimizer. 
+The \texttt{datablade} optimizer combines the \texttt{MISES} software with the \texttt{scipy} module~\cite{2020SciPy-NMeth}.
+These two components allow good performance and robustness. 
+
+Figure~\ref{alg:datablade} illustrates how the blade is optimized by \texttt{datablade}.
+It comprehends the optimization algorithm keeping the blade dimensionality fixed alongside 
+the scaling process to increase convergence. Figure~\ref{alg:datablade} starts with the loading 
+of the configuration file, \texttt{config.json}, which provides the initial guess - where the 
+optimization starts -, the aerodynamic style and the aerodynamic duty of the blade. Once 
+these properties are loaded, the program starts to optimize the blade using an
+optimization based on the dimensionality adaptation of the blade to the problem. 
+
+\input{tikz/databladeOptimizer}

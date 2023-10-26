@@ -1,0 +1,115 @@
+\documentclass[UKenglish, aspectratio = 169]{beamer}
+
+% theme and packages
+\usetheme{Bear}
+\usepackage{relsize}
+\usepackage{pgfplots} 
+\usepackage{movie15} 
+\usepackage{pgf-pie}
+\usepackage{csvsimple}
+\usepackage{pdfpages}
+\usepgfplotslibrary{
+    groupplots,
+    units
+}
+
+\usepackage{datetime}
+\newdate{date}{05}{10}{2023}
+\date{\displaydate{date}}
+
+% doc setup
+\author[Antonio Pucciarelli]{\href{https://github.com/antoniopucciarelli}{Antonio Pucciarelli}}
+\title{\textsc{Machine Learning \\ for Turbomachinery}}
+\subtitle{Data-Driven Design Methods for High-Speed Turbines}
+
+\begin{document}
+\hidelogo
+
+\section{Overview}
+\SectionPage
+
+\input{./chapter/overview}
+
+\input{./chapter/mindMap}
+
+\section{Data Setup}
+\SectionPage
+
+\input{./chapter/mindMap-dataSetup}
+
+\subsection{Data in Turbine Design Process}
+\SubSectionPage
+
+\input{./chapter/designFlow}
+
+\subsection{Tool for Turbine Design}
+\SubSectionPage
+
+\input{./chapter/designTools}
+
+\subsection{Blade Parametrization}
+\SubSectionPage
+
+\input{./chapter/geometryParametrization}
+
+\subsection{Aerodynamic Duty}
+\SubSectionPage
+
+\input{./chapter/aerodynamicDuty}
+
+\subsection{Aerodynamic Style}
+\SubSectionPage
+
+\input{./chapter/aerodynamicStyle}
+
+\section{Database Generation}
+\SectionPage
+
+\input{./chapter/mindMap-dataGeneration}
+
+\subsection{Flow Solver}
+\SubSectionPage
+
+\input{./chapter/mises}
+
+\subsection{Optimization in Turbine Design Process}
+\SubSectionPage
+
+\input{./chapter/database}
+
+\subsection{Optimizer}
+\SubSectionPage
+
+\input{./chapter/optimization.tex}
+
+\subsection{\texttt{datablade}}
+\SubSectionPage
+
+\input{./chapter/datablade.tex}
+
+\subsection{Optimization Results}
+\SubSectionPage
+
+\input{./chapter/optimizationResults.tex}
+
+\section{Machine Learning}
+\SectionPage
+
+\input{./chapter/mindMap-machineLearning}
+
+\subsection{Artificial Intelligence in Turbine Design Process}
+\SubSectionPage
+
+\input{./chapter/artificialIntelligence.tex}
+
+\subsection{AI Outcomes}
+\SubSectionPage
+
+\input{./chapter/outcome.tex}
+
+\section{References}
+\SectionPage
+
+\input{./chapter/bibliography}
+
+\end{document}

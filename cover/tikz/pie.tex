@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+
+    \csvreader[no head]{tikz/csv/angles.csv}
+        {1=\colValI, 2=\colValII, 3=\colValIII}
+        {
+            \pie[polar, explode=0.08]
+            {
+                \colValI/$0.5^{\circ} < \Delta \alpha_2 \leq 1^{\circ}$, 
+                \colValII/$1^{\circ} < \Delta \alpha_2 \leq 2^{\circ}$, 
+                \colValIII/$\Delta \alpha_2 \leq 0.5^{\circ}$
+            }
+        }
+
+\end{tikzpicture}

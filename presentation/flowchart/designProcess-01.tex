@@ -1,0 +1,123 @@
+\begin{tikzpicture}
+    
+    \node[draw,
+        rectangle,
+        % rounded corners,
+        line width = \PTS,
+        minimum height = \TOTheight,
+        minimum width = \TOTwidth
+    ] (designProcess) at (0, 0) {};
+
+    \node[draw,
+        rectangle,
+        % rounded corners,
+        line width = \PTS,
+        minimum height = 1cm,
+        minimum width = \TOTwidth,
+        above = -\PTS of designProcess.north
+    ] (designTitle) {\tiny{\textbf{\tiny{Turbomachine Design Process}}}};
+
+    \node[draw,
+        circle, 
+        opacity=\TRANSPval,
+        line width = \PTS,
+        minimum size = \bigR,
+        fill = gray!\SHADOWgray,
+        right = \physicsDist of designProcess.west
+    ] (physics) {\tiny{\textbf{Physics}}};
+
+    \node[draw,
+        circle, 
+        line width = \PTS,
+        opacity=\TRANSPval,
+        minimum size = \medR,
+        fill = gray!\SHADOWgray,
+        above right = 0.5cm and 0.5cm of physics.east
+    ] (modeling) {\tiny{\textbf{Modeling}}};
+
+    \node[draw,
+        circle, 
+        opacity=\TRANSPval,
+        line width = \PTS,
+        minimum size = \lowR,
+        fill = gray!\SHADOWgray,
+        below = 1cm of modeling.south
+    ] (testing) {\tiny{\textbf{Testing}}};
+
+    \coordinate[left=\leftS of designProcess.west]  (c1) {};
+    \coordinate[above=1.5cm of c1]                 (c2) {};
+    \coordinate[below=1.5cm of c1]                 (c3) {};
+    \coordinate[right=\leftS of designProcess.east] (c4) {};
+    \coordinate[above=1.5cm of c4]                 (c5) {};
+    \coordinate[below=1.5cm of c4]                 (c6) {};
+
+    \node[draw,
+        rectangle,
+        % opacity=\TRANSPval,
+        minimum width = \BLOCKwidth, 
+        minimum height = \BLOCKheight, 
+        line width = \PTSin,
+        left = \leftS of c2
+    ] (obj) {\parbox[t][\boxH][c]{\boxW}{
+        \tiny{\textbf{Objectives}
+        \begin{itemize}
+            \item Loss: $Y_p$
+            \item Weight
+        \end{itemize}  
+    }}};
+
+    \node[draw,
+        rectangle,
+        opacity=\TRANSPval,
+        minimum width = \BLOCKwidth, 
+        minimum height = \BLOCKheight,
+        line width = \PTSin,
+        left = \leftS of c3
+    ] (constr) {\parbox[t][\boxH][c]{\boxW}{
+        \tiny{\textbf{Constraints}
+        \begin{itemize}
+            \item Turning: $\alpha_1$ \& $\alpha_2$
+            \item Flow: $Re$ \& $M_2$
+            \item Annlus: $\frac{r_2}{r_1}$
+            \item Manufacturing: $\frac{R_{TE}}{c}$
+        \end{itemize}  
+    }}};
+
+    \node[draw,
+        rectangle,
+        opacity=\TRANSPval,
+        minimum width = \BLOCKwidth, 
+        minimum height = \BLOCKheight,
+        line width = \PTSin,
+        right = \leftS of c5
+    ] (obj1) {\parbox[t][\boxH][c]{\boxW}{
+        \tiny{\textbf{Objectives}
+        \begin{itemize}
+            \item Achieved loss: $Y_p$
+            \item Achieved weight
+        \end{itemize}  
+    }}};
+
+    \node[draw,
+        rectangle,
+        opacity=\TRANSPval,
+        minimum width = \BLOCKwidth, 
+        minimum height = \BLOCKheight,
+        line width = \PTSin,
+        right = \leftS of c6
+    ] (def) {\parbox[t][\boxH][c]{\boxW}{
+        \tiny{\textbf{Definition}
+        \begin{itemize}
+            \item Blade geometry
+        \end{itemize}  
+    }}};
+    
+    \draw[-latex, line width = 2pt, opacity=\TRANSPval] (physics)  to (modeling.west);
+    \draw[-latex, line width = 2pt, opacity=\TRANSPval] (modeling) to (testing.north);
+    \draw[-latex, line width = 2pt, opacity=\TRANSPval] (testing)  to (physics.south east);
+    \draw[-latex, line width = 1pt] (obj.east)    -- (c2) -- (c1) to (designProcess.west);
+    \draw[-latex, line width = 1pt, opacity=\TRANSPval] (constr.east) -- (c3) -- (c1) to (designProcess.west);
+    \draw[-latex, line width = 1pt, opacity=\TRANSPval] (designProcess.east) -- (c4) -- (c5) to (obj1.west);
+    \draw[-latex, line width = 1pt, opacity=\TRANSPval] (designProcess.east) -- (c4) -- (c6) to (def.west);
+
+\end{tikzpicture}

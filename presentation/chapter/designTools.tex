@@ -1,0 +1,81 @@
+\begin{frame}{Design process - \Romannum{1}}
+    \only<1>{
+        \begin{figure}
+            \centering
+            \input{flowchart/blocks-00}
+            % \includegraphics[page=1, scale=0.75]{pdf/designModes-00}
+        \end{figure}
+    }
+    \only<2>{
+        \begin{figure}
+            \centering
+            \input{flowchart/blocks-01}
+            % \includegraphics[page=1, scale=0.75]{pdf/designModes-01}
+        \end{figure}
+    }
+    \only<3>{
+        \begin{figure}
+            \centering
+            \input{flowchart/blocks-02}
+            % \includegraphics[page=1, scale=0.75]{pdf/designModes-02}
+        \end{figure}
+    }
+\end{frame}
+
+\begin{frame}{Data in turbomachinery design}
+    \vspace{0.5cm}
+    These points allow to use a \textbf{regression based model} to design a blade.
+    \vspace{0.5cm}
+    \begin{itemize}
+        \setlength{\itemsep}{15pt}
+        \item Turbomachinery design physics \textbf{is not stochastic}
+        \item Turbomachinery design is \textbf{multi-objectives} and \textbf{multi-constrained}
+        \item Turbomachinery blades are \textbf{high dimensional objects}
+    \end{itemize}
+    \vspace{0.5cm}
+    The blade has to be parametrized by \textbf{few parameters} after a \textbf{design space reduction}. \\
+    
+    \vspace{0.5cm}
+    Data collection has to \textbf{correlate} the \textbf{design objectives} to the \textbf{blade geometry}.
+\end{frame}
+
+\begin{frame}{Design process - \Romannum{2}}
+    \begin{figure}
+        \centering
+        \input{flowchart/blocks-03}
+        % \includegraphics[page=1, scale=0.75]{pdf/designModes-03}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Data features}
+    \vspace{0.5cm}
+    % The design tool \textbf{does not have objectives neither constraints}. 
+    % \newline
+    % \vspace{0.2cm}
+    
+    The computed data has to \textbf{map} the objective domain satisfying the constraints. 
+    \newline
+    \vspace{0.2cm}
+    
+    This can be achieved using appropriate \textbf{design features}.
+    \newline
+    \vspace{0.2cm}
+    
+    In order to collect all these information, the data will depend on two new \textbf{aerodynamic features}: 
+    \newline
+    \vspace{0.2cm}
+
+    \begin{itemize}
+        \setlength{\itemsep}{15pt}
+        \item \textbf{Aerodynamic duty}: a domain of study that allows \textbf{mapping} the constraints
+        \item \textbf{Aerodynamic style}: a domain of study that allows \textbf{mapping} the objectives
+    \end{itemize} 
+\end{frame}
+
+\begin{frame}{Design process - \Romannum{3}}
+    \begin{figure}
+        \centering
+        \input{flowchart/blocks-04}
+        % \includegraphics[page=1, scale=0.75]{pdf/designModes-04}
+    \end{figure}
+\end{frame}

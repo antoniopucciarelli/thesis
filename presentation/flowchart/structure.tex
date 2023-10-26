@@ -1,0 +1,146 @@
+\begin{figure}[!ht]
+    \vspace{-0.6cm}
+    \centering
+    \begin{tikzpicture}[font=\fontsize{4}{4}\ttfamily, thick, align=center, node distance=0.35cm, remember picture, x=\textwidth, y=\textheight]
+    
+    % Start block
+    \node[draw,
+        rectangle,
+        rounded corners,
+        % minimum width=2.5cm,
+        % minimum height=0.2cm
+        ] (start) {START};
+    
+    % getting guess of the solution 
+    \node[draw,
+        trapezium, 
+        trapezium stretches=true, % A later addition
+        trapezium left angle=70, 
+        trapezium right angle=110, 
+        text centered,
+        below=of start,      
+        % minimum width=3.0cm,  
+        % minimum height=1cm,
+    ] (aerodynamicDuty) {aerodynamic duty setup\\$\alpha_1$, $\alpha_2$, $M_2$ and $Re$};  
+
+    % getting guess of the solution 
+    \node[draw,
+        trapezium, 
+        trapezium stretches=true, % A later addition
+        trapezium left angle=70, 
+        trapezium right angle=110, 
+        text centered,
+        below=of aerodynamicDuty,      
+        % minimum width=3.0cm,  
+        % minimum height=1cm,
+     ] (aerodynamicStyle) {aerodynamic style setup\\$\frac{M_P}{M_{TE}}$, $\frac{L_P}{L_{surf}}$, $\frac{M_{LE}}{M_{TE}}\frac{M_2}{M_1}$ and $\frac{M_{PS}}{M_{TE}}\frac{M_2}{M_{1, ax}}$}; 
+
+    % getting guess of the solution 
+    \node[draw,
+        trapezium, 
+        trapezium stretches=true, % A later addition
+        trapezium left angle=70, 
+        trapezium right angle=110, 
+        text centered, 
+        below=of aerodynamicStyle,      
+        % minimum width=3.0cm,  
+        % minimum height=1cm,
+    ] (guess) {guessing $\boldsymbol{x}_{0}$\\from \texttt{config.json}};  
+
+    % dimensionality check
+    \node[draw, 
+        diamond,
+        below=of guess
+      ] (dimCheck) {$N_{suct} \leq N_{suct_{target}}$\\[0.1cm]$N_{press} \leq N_{press_{target}}$};
+    
+    % setting up control point
+    \coordinate[right=4cm of dimCheck] (controlPoint) {};
+
+    % convergence check
+    \node[draw, 
+        diamond,
+        above=3cm of controlPoint
+    ] (convCheck) {$iter > iterTol$\\[0.1cm]$cost < costTol$\\[0.1cm]$\sigma < \sigma_{tol}$};
+
+    % x optimization
+    \node[draw, 
+        below=0.5cm of convCheck,
+        % minimum width=6.5cm,  
+        % minimum height=1cm,
+    ] (xUpdate) {$\boldsymbol{x}$ update};
+  
+    % coordinate computation
+    \node[draw, 
+        below=of xUpdate,
+        % minimum width=6.5cm,  
+        % minimum height=1cm,
+    ] (settingPar) {blade coordinates computation using\\ Kulfan parametrization};
+    
+    % ISET input file generation
+    \node[draw,
+        below=of settingPar,
+        % minimum width=5.5cm,
+        % minimum height=1cm,
+        ] (ISETsetup) {setting up \texttt{ISET} configuration file};
+    
+    % ISES input file generation
+    \node[draw,
+        below=of ISETsetup,
+        % minimum width=5.5cm,
+        % minimum height=1cm,
+    ] (ISESsetup) {setting up \texttt{ISES} configuration file};
+
+    % ISET input file generation
+    \node[draw,
+        below=of ISESsetup,
+        % minimum width=5.5cm,
+        % minimum height=1cm,
+    ] (MISEScomputation) {running \texttt{MISES} solver: grid generator, \\flow solver \& flow post-processing};
+        
+    % cost computation
+    \node[draw,
+        below=of MISEScomputation,
+        % minimum width=5.5cm,
+        % minimum height=1cm,
+    ] (costComputation) {computing cost function};
+
+    % end 
+    \node[draw,
+        rectangle,
+        rounded corners,
+        left=1cm of dimCheck,
+    ] (end) {END};
+
+    % coordinates for arrotw
+    \coordinate[left=1.3cm of convCheck]  (c1)                            {};
+    \coordinate[]                         (c2) at (c1 |- costComputation) {};
+    \coordinate[right=1cm of convCheck] (c3)                            {};
+    \coordinate[below=0.35cm of convCheck] (c4)                            {};
+    \coordinate[right=1cm of dimCheck] (c5) {};
+    \coordinate[] (c6) at (c5 |- convCheck.north) {};
+    \coordinate[right=1.5cm of convCheck] (c7) {};
+    \coordinate[below=0.35cm of costComputation] (c8) {};
+    \coordinate[] (c9) at (c7 |- c8) {};
+    \coordinate[] (c10) at (dimCheck |- c9) {};
+    \coordinate[left=0.5cm of dimCheck] (c11) {};
+
+    % arrow drawing
+    \draw[-latex] (start) to (aerodynamicDuty);
+    \draw[-latex] (aerodynamicDuty) to (aerodynamicStyle);
+    \draw[-latex] (aerodynamicStyle) to (guess);
+    \draw[-latex] (guess) to (dimCheck);
+    \draw[-latex] (dimCheck.east) -- node[anchor=south] {yes} (c5) -- (c6) to (convCheck.north);
+    \draw[-latex] (convCheck.south) -- node[anchor=east] {no} (c4) to (xUpdate.north);
+    \draw[-latex] (xUpdate) to (settingPar);
+    \draw[-latex] (settingPar) to (ISETsetup);
+    \draw[-latex] (ISETsetup) to (ISESsetup);
+    \draw[-latex] (ISESsetup) to (MISEScomputation);
+    \draw[-latex] (MISEScomputation) to (costComputation);
+    \draw[-latex] (costComputation.west) -- (c2) -- (c1) to (convCheck.west);
+    \draw[-latex] (convCheck.east) -- node[anchor=north] {yes} (c3) -- (c7) -- (c9) -- (c10) -- (dimCheck.south); 
+    \draw[-latex] (dimCheck.west) -- node[anchor=south] {no} (c11) -- (end.east);
+
+    \end{tikzpicture}
+    \label{alg:datablade}
+    
+\end{figure}

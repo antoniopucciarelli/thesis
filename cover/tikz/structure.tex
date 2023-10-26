@@ -1,0 +1,115 @@
+\begin{figure}[!ht]
+
+    \centering
+    \begin{tikzpicture}[
+        font=\small, 
+        thick, 
+        align=center, 
+        node distance=0.4cm, 
+        remember picture, 
+        x=\textwidth, 
+        y=\textheight
+    ]
+    
+    % Start block
+    \node[draw,
+        rectangle,
+        % minimum width=2.5cm,
+        minimum height=1cm
+        ] (start) {START};
+    
+    % getting guess of the solution 
+    \node[draw,
+        rectangle,
+        below=of start,      
+        % minimum width=3.0cm,  
+        minimum height=1cm,
+    ] (aerodynamicDuty) {aerodynamic duty setup\\$\alpha_1$, $\alpha_2$, $M_2$ and $Re$};  
+
+    % getting guess of the solution 
+    \node[draw,
+        rectangle,
+        below=of aerodynamicDuty,      
+        % minimum width=3.0cm,  
+        minimum height=1cm,
+        ] (guess) {guessing $\boldsymbol{x}_{0}$\\from \texttt{config.json}};  
+    
+    % convergence check
+    \node[draw, 
+        diamond,
+        below=of guess
+    ] (convCheck) {convergence check\\\texttt{iter > iterTol}\\\texttt{cost < costTol}\\$\sigma < \sigma_{tol}$};
+    
+    % end 
+    \node[draw,
+        rectangle,
+        right=2cm of convCheck,
+    ] (end) {END};
+
+    % x optimization
+    \node[draw, 
+        below=1cm of convCheck,
+        % minimum width=6.5cm,  
+        minimum height=1cm,
+    ] (xUpdate) {$\boldsymbol{x}$ update};
+  
+    % coordinate computation
+    \node[draw, 
+        below=of xUpdate,
+        % minimum width=6.5cm,  
+        minimum height=1cm,
+    ] (settingPar) {blade coordinates computation using\\ Kulfan parametrization};
+    
+    % ISET input file generation
+    \node[draw,
+        below=of settingPar,
+        % minimum width=5.5cm,
+        minimum height=1cm,
+        ] (ISETsetup) {setting up \texttt{ISET} configuration file};
+    
+    % ISES input file generation
+    \node[draw,
+        below=of ISETsetup,
+        % minimum width=5.5cm,
+        minimum height=1cm,
+    ] (ISESsetup) {setting up \texttt{ISES} configuration file};
+
+    % ISET input file generation
+    \node[draw,
+        below=of ISESsetup,
+        % minimum width=5.5cm,
+        minimum height=1cm,
+    ] (MISEScomputation) {running \texttt{MISES} solver: grid generator, \\flow solver \& flow post-processing};
+        
+    % cost computation
+    \node[draw,
+        below=of MISEScomputation,
+        % minimum width=5.5cm,
+        minimum height=1cm,
+    ] (costComputation) {computing cost function};
+
+    % coordinates for arrotw
+    \coordinate[left=2.5cm of convCheck] (c1) {};
+    \coordinate[] (c2) at (c1 |- costComputation) {};
+    \coordinate[right=1.5cm of convCheck] (c3) {};
+    \coordinate[below=0.5cm of convCheck](c4) {};
+    
+    % arrow drawing
+    \draw[-latex] (start) to (aerodynamicDuty);
+    \draw[-latex] (aerodynamicDuty) to (guess);
+    \draw[-latex] (guess) to (convCheck);
+    \draw[-latex] (convCheck.south) -- node[anchor=east] {no} (c4) to (xUpdate.north);
+    \draw[-latex] (xUpdate) to (settingPar);
+    \draw[-latex] (settingPar) to (ISETsetup);
+    \draw[-latex] (ISETsetup) to (ISESsetup);
+    \draw[-latex] (ISESsetup) to (MISEScomputation);
+    \draw[-latex] (MISEScomputation) to (costComputation);
+    \draw[-latex] (costComputation.west) -- (c2) -- (c1) to (convCheck.west);
+    \draw[-latex] (convCheck.east) -- node[anchor=north] {yes} (c3) to (end.west); 
+
+    \end{tikzpicture}
+    
+    \caption{\texttt{datablade} structure.}
+    \label{alg:datablade}
+    
+\end{figure}

@@ -1,0 +1,68 @@
+\begin{tikzpicture}
+    
+    \node[draw,
+        rectangle,
+        text centered,
+        line width = \PTS,
+        minimum height = \TOTheight,
+        minimum width = \TOTwidth
+    ] (optimizationProcess) at (0, 0) {\large{\textbf{Optimization}}};
+
+    % \node[
+    %     below right = 0.5cm and 0.5cm of optimizationProcess.north west 
+    % ] {
+    %     \includegraphics[scale=0.08]{./MITlogo.png}
+    % };
+
+    % \node[
+    %     above left = 0.15cm and 0.5cm of optimizationProcess.south east 
+    % ] {
+    %     \includegraphics[scale=0.3]{./SCIPYlogo.png}
+    % };
+
+    \node[draw,
+        rectangle,
+        text centered,
+        line width = \PTS,
+        % minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        right = 2*\xSpace of optimizationProcess
+    ] (database) {\large{\textbf{Database}}};
+    
+    \coordinate[left=\xSpace of optimizationProcess.west]  (c1) {};
+    \coordinate[above=\Ydist of c1]                      (c2) {};
+    \coordinate[below=\Ydist of c1]                      (c3) {};
+
+    \node[draw,
+        rectangle,
+        text centered,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        left = \xSpace of c2
+    ] (designSpace) {\large{\textbf{\makecell[c]{Kulfan\\parametrization}}}};
+
+    \node[draw,
+        rectangle,
+        text centered,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        left = \xSpace of c1
+    ] (constr) {\large{\textbf{\makecell[c]{Aerodynamic\\Duty}}}};
+
+    \node[draw,
+        rectangle,
+        text centered,
+        line width = \PTS,
+        minimum width = \WIDTH,
+        minimum height = \HEIGHT,
+        left = \xSpace of c3
+    ] (obj) {\large{\textbf{\makecell[c]{Aerodynamic\\Style}}}};
+
+    \draw[-latex, line width = 1pt] (designSpace) -- (c2) -- (c1) to (optimizationProcess.west);
+    \draw[-latex, line width = 1pt] (constr) to (optimizationProcess.west);
+    \draw[-latex, line width = 1pt] (obj) -- (c3) -- (c1) to (optimizationProcess.west);
+    \draw[-latex, line width = 1pt] (optimizationProcess.east) to (database.west);
+
+\end{tikzpicture}

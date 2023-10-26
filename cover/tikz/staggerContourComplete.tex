@@ -1,0 +1,33 @@
+\begin{figure}[!h]
+
+    \centering
+    
+    \begin{tikzpicture}
+
+        \begin{axis}[
+            width=\textwidth,
+            axis equal,
+            xmin=0, xmax=20,
+            ymin=0, ymax=20,
+            axis lines=none, 
+        ]
+
+            \addplot graphics [
+                xmin=0, xmax=20,
+                ymin=0, ymax=20,
+            ] {./images/staggerComplete.eps};
+            
+            % \draw[fill=red] (25, 23) circle (5pt);
+            % \draw[fill=red] (25, 175) circle (5pt);
+            % \draw[fill=red] (180, 23) circle (5pt);
+            % \draw[fill=red] (180, 175) circle (5pt);
+
+        \end{axis}
+    \end{tikzpicture}
+
+    \caption{Complete $\gamma$ variation with respect to $\alpha_1$ \& $\alpha_2$.
+    Corner points in red and inner points in black.}
+    
+    \label{fig:linearInterpolationFinal}
+
+\end{figure}

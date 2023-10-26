@@ -1,0 +1,5 @@
+from sklearn.decomposition import PCA
+
+pca = PCA()
+pcaVal = pca.fit_transform(X=X)
+varianceDistr = np.cumsum(pca.explained_variance_ratio_)

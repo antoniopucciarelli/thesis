@@ -1,0 +1,1170 @@
+                  Abstract
+
+                  In the field of turbomachinery design, the current design models are often slow and repeti-
+                  tive. These models rely heavily on computers and frequently overlook any existing knowl-
+                  edge about the design space. This work introduces an innovative methodology in the
+                  domain of turbomachinery design, seamlessly integrating machine learning techniques
+                  into the blade design process.
+
+                  The importance of this thesis lies in its ability to eliminate the requirement for CFD
+                  simulations in the design process. Moreover, it gives designers a clear understanding
+                  of the loading limit of a blade and a deep understanding of the correlations between the
+                  loading distribution and the blade geometry. It also sheds light on the physical limitations
+                  a designer might come across during the design process.
+
+                  Highlighting the significant influence of this study, the thesis not only presents a fresh
+                  design approach but also offers in-depth understanding of the crucial steps that support
+                  its implementation. Covering the entire process from creating data to utilizing artificial
+                  intelligence in turbomachinery design, this research sets the groundwork for more effective
+                  design strategies.
+
+                  To sum up, this thesis introduces a new approach to designing turbomachinery blades
+                  through the integration of machine learning methods. By creating a fast and independent
+                  design process and providing a clear explanation of how data is collected and analyzed,
+                  this research brings improved efficiency and accuracy to the world of turbomachinery de-
+                  sign.
+
+                  Keywords: Turbomachinery, data analysis, artificial intelligence, modal reduction
+
+                  1 |  Problem Framing
+
+                  This chapter aims to outline the challenges that arise from designing a turbomachine
+                  using a conventional approach. Additionally, it introduces a new potential design
+                  method that can address some of these issues.
+
+                  1.1.      Design Process
+
+                  Studying a turbomachinery system requires significant effort, both in terms of modeling
+                  the underlying physics that define the problem and in generating the optimal configuration
+                  that aligns with design constraints. An efficient approach to tackling this challenge
+                  involves framing it in terms of targets and constraints. By minimizing the complexity of
+                  the design process, one can mitigate the risks associated with poor design.
+
+                  1.1.1.  Problem Classification
+
+                  An engineering problem can be described by inputs and outputs. An engineer should
+                  be able to get the best outputs giving the inputs in the less time possible. Inputs and
+                  outputs can be classified in order to better understand the problem and to solve it in the
+                  most effective way.
+
+                  On the inputs side, they can be subdivided into:
+
+                      • Objectives: these define the parameters that need optimization
+                      • Constraints: these define the region of interest for the study
+
+                  On the outputs side, they can be classified as follows:
+
+                      • Objectives: the optimized parameters resulting from the design
+                      • Definitions: the engineering representation of the outputs
+
+                  A modeling framework serves as the link between the inputs and outputs of the problem.
+                  A well-designed framework allows reaching the best solution in reasonable time.
+
+                  Figure 1.1 represents a possible design problem.
+
+              1| Problem Framing
+
+
+           1.1.2.  Turbomachinery Analysis in Complex Machines
+
+            A general modeling approach involves decomposing the design of a complex machine into
+            various sub-problems, each of which plays a role in the overall system’s performance.
+            For instance, the study of an aeronautical engine can be subdivided into the examination
+            of its primary components: the fan, compressor, combustion chamber, turbine, spool,
+            gears, control systems, and other important assemblies.
+
+            The principal macroscopic properties of the system can be derived from an initial
+            analysis of its primary components. To illustrate, when focusing on the turbine, it be-
+            comes feasible to estimate the number of stages and to make a preliminary approximation
+            of the flow deflection angles in each stage. After this preliminary design is formulated,
+            the next step is to design blades that satisfy these specified properties. Each blade, in
+            turn, will be characterized by its constituent sections. The collective properties of the
+            blade will then be summarized by its mid-section. Consequently, the design process for
+            turbomachinery invariably leads back to the design of the blades’ mid-section.
+
+            This outcome serves as the focal point of a new section design methodology.
+
+            Figure 1.2 depicts the central feature of problem decomposition.
+
+            1.2.      Design Methods
+
+            Recognizing that the section generation is the most repetitive task in the turbomachin-
+            ery design process, it is advantageous to also comprehend the current state of the art
+            in the section generation. Various methods exist for designing a blade section, many of
+            which can be classified as iterative processes. In these methods, a numerical scheme
+            is employed to describe flow properties around a chosen geometry.
+
+            It is evident that sidestepping this optimization task, which requires Computational
+            Fluid Dynamics (CFD), could substantially contribute to reducing design time.
+
+            1.2.1.  Iterative Based Method
+
+            A further more classification can be made on the iterative based methods. These methods
+            can be:
+
+                • Automated: done using computers, where the solver tends blindly to the optimal
+                  configuration.
+                • Manaul: done by engineers, where prior knowledge and experience allow reaching
+                  the optimum.
+
+            These methods all encounter the same challenge: time is wasted on iterations in-
+            volving CFD [2]. On the other hand, each of these methods has its own advantage.
+            In the case of automated methods, optimization is expedited through computer
+            usage [12]. In contrast, manual methods leverage prior knowledge and experience
+            to crunch down the domain of study, consequently reducing the time required for
+            optimization.
+
+            1.2.2.  Non-Iterative Based Method
+
+            The non-iterative-based method integrates prior knowledge and experience, utilizing
+            data, along with the speed of computers through machine learning.
+
+            To describe this method, it is essential to introduce a new way of design a blade. Instead
+            of generating a blade by iterating through various geometries, this method constructs a
+            blade using a dataset [10] that represents a range of blade variations. Within this domain
+            of blades, the optimal blade is determined by maximizing the defined objectives
+            while adhering to the imposed constraints.
+
+            The effectiveness and accuracy of this method rely significantly on the database that
+            must accurately represent the designated study domain. The sole optimization process
+            employed by this method is associated with identifying appropriate blades that define the
+            domain of study.
+
+            1.2.3.  Concepts
+
+            After introducing this new method, its framework is grounded in four other key concepts.
+            These concepts dictate the approach to generating and processing data within the
+            method. These concepts are:
+
+                • The suitable machine learning model capable of accommodating the physics in-
+                  herent in midsection generation.
+                • The macroscopic behavior of a blade.
+                • The local distribution of the load across the blade.
+                • The dimensionality reduction of the problem through a parameterized represen-
+                  tation of both the blade and its loading.
+
+                  1.2.3.1.  Physics & Modeling
+
+                  One of the primary aspects to consider is how data will be processed by the machine
+                  learning algorithm. Blade design is not susceptible to external random noise, implying
+                  that a blade will consistently exhibit the same behavior under identical operating condi-
+                  tions. This underscores the existence of a one-to-one correlation between the inputs and
+                  the resulting geometry.
+
+                  This concept holds great significance for selecting the appropriate machine learning model.
+                  Due to this data correlation, a regression approach will be employed for interpolating
+                  within the domain.
+
+                  1.2.3.2.  Aerodynamic Duty
+
+                  Because of the high dimensionality of the problem, it is necessary to classify the objectives
+                  of study in order to minimize at its best the number of inputs.
+
+                  A way of describing the macroscopic working conditions of the flow is to define:
+
+                      • α1: inlet flow angle
+                      • α2: outlet flow angle
+                      • M2: outlet Mach number
+                      • Re: Reynolds number of the flow
+
+                  These four parameters, represented in Figure 1.3, are the minimum requirements for the
+
+            definition of a working condition or duty of the blade. As result, these parameters will
+            be indentified as aerodynamic duty of the blade.
+
+            1.2.3.3.  Aerodynamic Style
+
+            In a similar way, a blade’s behavior can be characterized by its load distribution. In
+            contrast to the aerodynamic duty, the load can be defined as a localized property of
+            the blade. Adhering to the same philosophy as the aerodynamic duty, it is possible to
+            parametrize the load distribution around a blade, thereby enabling the examination of
+            key load patterns relevant to the engineering field.
+
+            Within the context of the current study, only pertinent load patterns will be used for
+            database generation. The usage of useful load-patterns avoid unnecessary diffusion and
+            are the ones which generate the highest load differences between suction and pressure side.
+
+            1.2.3.4.  Dimensionality
+
+            Having introduced two significant classifications for reducing constraint dimensionality, a
+            dimensionality reduction technique will also be employed to define the blade.
+
+            Blade parametrization offers the advantage of conserving memory space and establish-
+            ing a uniform definition for all potential blades within the database.
+
+            Furthermore, another noteworthy benefit emerges from the simplification of data inter-
+            polation due to parametrization: interpolating parameters is considerably simpler than
+            interpolating the intricate behavior of the blade’s coordinates.
+
+            2 |  Framework
+
+            This chapter explains the main building blocks for problem dimensionality reduction,
+            database generation, and machine learning setup. It will underscore the key role
+            of parametrization in the dimensionality reduction of the database, in terms of its
+            dimensions and the way of representing the data.
+
+            2.1.      Blade Geometry Parametrization
+
+            The blade geometry is defined by two components: the camberline and the profile line.
+            The following parametrization follows Kulfan’s parametrization [8].
+
+            2.1.1.  Camberline
+
+            The camberline serves as a primary property layer for defining the blade geometry. The
+            suction side and pressure side geometry are added atop this layer to generate the complete
+            blade. The camberline holds the utmost importance in blade generation. Even a minor
+            alteration to the camberline shape can lead to a significant change in the flow behavior
+            around the blade.
+
+            2.1.1.1.  Formulation
+
+            The parameters used for camberline definition are:
+
+                • γ: stagger angle.
+                • χ1: metal inlet angle.
+                • χ2: metal outlet angle.
+
+            These three parameters (γ, χ1, and χ2) are then employed to compute intermediate vari-
+            ables, which will subsequently contribute to defining the camberline structure. The inter-
+            mediate variables n, a, and b are computed as: -- Equation --
+
+            The camberline is defined as: -- Equation --
+
+            The normal and tangent vectors are employed for the thickness distribution along the
+            camberline, as explained in Section 2.1.2.
+
+
+            2.1.2.  Profile Line
+
+            The profile line defines both the suction side and the pressure side of the blade.
+            Utilizing Kulfan’s parametrization [8], it is possible to generate a wide array of blades
+            using just a few parameters. The preference for parametrization over coordinate-based
+            representation arises from:
+
+                • optimization speed
+                • the fact that, considering the tool’s ultimate purpose, parameters are easier to
+                  correlate than a pure coordinate-based representation
+
+            2.1.2.1.  Formulation 
+
+            The profile line is defined by N + 1 parameters: Ai for i = 0 : N. These parameters
+            represent the weights of the modes that characterize the blade.
+
+            2.1.2.1.1  Bernstein Functions  The shape modes of the blade are described by the
+            Bernstein functions, denoted as S(x,i,N):
+
+            The blade geometry modes are visualized in Figure 2.3.
+
+            2.1.2.1.2  Shape Function  In addition to the Bernstein functions as described in
+            Equation (2.7), a shape function [9] is introduced for representing the leading edge
+            properties and trailing edge properties of the blade. The shape function, denoted as C(x),
+            takes the form:
+
+            Equation (2.8) captures the roundness of the leading edge and the wedge angle properties
+            at the trailing edge of the blade. The shape function is illustrated in Figure 2.4.
+
+            2.1.2.1.3  Thickness Distribution  The blade thickness, denoted as ζ, is determined
+            by combining Equation (2.7) and Equation (2.8). Additionally, the trailing edge radius,
+            RTE, is incorporated using a linear distribution, ζTE, over the camberline. The thick-
+            ness distribution ζ(x) is related to camberline properties and is distributed using a
+            unit Bernstein function - S(x,0,2). The distribution ζTE(x) solely relies on camberline
+            properties nx and ny.
+
+            Figures 2.5 presents the profile blade modes, which are a combination of Equation (2.7)
+            and Equation (2.8).
+
+            The suction side and pressure side coordinates are computed using a custom set of points
+            over the camberline. The camberline is discretized with Chebyshev nodes all along the
+            chord. This approximation allows better accuracy at the leading edge and at the traling
+            edge of the blade.
+
+            Figure 2.6 and Figure 2.7 show clearly the blade coordinates starting from the chord dis-
+            cretization passing through the camberline discretization to the suction side and pressure
+            side points. Using the Chebyshev nodes allows having a faster generation of the
+            blade while keeping good accuracy over the blade coordinates representation.
+
+            2.1.2.2.  Main Features
+
+            Kulfan’s parametrization retains several crucial geometric properties:
+
+                • The leading edge radius, RLE, is determined solely by the A0 parameter.
+                • The trailing edge angle, β, is directly related to the AN parameter.
+
+            These features hold great significance in studying the blade characteristics in relation
+            to flow properties.
+
+            2.1.2.3.  Scaling
+
+            The blade optimization takes place through incremental steps, utilizing a strategy that
+            ensures faster convergence. One key aspect of this strategy is to perform a scaling of the
+            blade once convergence is achieved. This step is crucial for optimizing a blade with many
+            degrees of freedom. The primary aim of scaling is to address potential pits within the
+            domain during the blade optimization.
+
+            This scaling is generated solving a linear system. The linear system uses a matrix of
+            Nnew × Nnew dimension. To build up this matrix, the blade, parametrized with lower
+            number of parameters N, is evaluated on an equispaced number of points, Nnew times,
+            along the axial chord. The resulting matrix is then used to compute the new parametriza-
+            tion, made by Nnew parameters.
+
+            It’s important to note that the only unaltered parameters are:
+
+                • For the suction side and pressure side: RLE and β
+                • For the camberline: χ1, χ2 and γ
+
+            These parameters remain unchanged during the scaling process due to their direct corre-
+            lation with the blade’s geometrical properties
+
+            Figures2.8and2.9illustrate different blades and the outcomes resulting from their scaling.
+
+          2.2.            Aerodynamic Style Parametrization
+
+          In contrast to the aerodynamic duty, the aerodynamic style allows to define locally
+          the load distribution along the blade.
+
+          The aerodynamic style is defined by the Mach fraction,  M  , over the surface length
+                                                                                                                MT E
+          fraction,         S  .
+                          ST OT
+
+        2| Framework                                                                                 15
+
+        There are multiple reasons about the use of these parameters. The key ones are:
+
+            • The leading edge is a regione where, due to the high curvature of the geometry,
+              there is a high change in surface fraction over the axial chord. Since this
+              region is a very important for the correlation study, the  M  vs  S  formulation
+                                                                              MT E     ST OT
+              results appropriate.
+            • The boundary layer properties, such as transition and detachament, is mostly
+              dependent on the total flow path length done by the flow - described by S - and
+              not over its projection over the axis - described by x.
+
+        The aerodynamic style [1] is defined by these variables:
+
+            • MLE M2: leading edge Mach fraction. This parameter defines the load at the leading
+              MT E M1
+              edge on the suction side.
+            • MP EAK: peak Mach fraction. Defines the peak Mach fraction on the suction side,
+                MT E
+              representing the highest Mach value over the blade.
+            • MP RESS M2 : pressure Mach number. It is a double descriptor of the leading edge
+                MT E  M1,ax
+              load on the suction side and the Mach fraction before the Mach fraction raises to
+              reach the trailing edge on the pressure side.
+            • SP EAK: surface fraction position where the peak Mach fraction, MP EAK, is positioned
+                ST OT                                                               MT E
+              over the load distribution.
+
+        It is important to understand that the load varies with respect to M1 and M1,ax.
+                                                                                        M2         M2
+        This is due to the fact that the leading edge load distribution is highly sensitive to the
+        inlet flow properties1.
+
+
+
+        2.2.1.  Trial & Error
+
+        Having introduced the variables which define the loading distribution, it is important to
+        notice that these variables have to be tuned in order to meet the manufacturing require-
+        ments - such as the leading edge radius (RLE ≥ 1.25 · 10−2). The trailing edge radius
+                                                        c
+        (RT E) is set at 1.25·10−2 throughout the whole study. These values are dictated mainly
+            c
+        by the manufacturing capabilities in the turbomachinery industry.
+
+        This concept is very important because there are blades which might not satisfy both
+        the aerodynamic style and the duty imposed. The trial and error tuning of the loading
+        behavior at the leading edge can be seen as a design limit but it can be also seen as a first
+        filtering operation over the aerodynamic style and the aerodynamic duty for appreciable
+        results.
+
+            1Defined by M and α .
+
+  The trial and error approach has been used mainly over the loading behavioiur at
+  the leading edge - both at the suction side and the pressure side of the blade. These
+  corrections are mainly made on the behavior of the conjunction point between the ellipse
+  shaped loading at the leading edge with the straight line after it.
+
+  This behavior is of paramount importance as it enables the convergence of a specific blade
+  set in terms of loading distribution and the exit flow angle.
+
+  Figures2.10provide visualizations of the load properties obtained using aspline parametriza-
+  tion:
+
+
+                  3 |  MISES
+
+                  The following sections aim to explain a key software component for the computation of
+                  the database.
+
+                  The optimizer, which generates the blades that will be part of the database, incorporates
+                  the MISES program1. This program utilizes a streamtube solver to solve the flow.
+
+                  The flow computation is rapid, and its results are employed for extrapolating the load
+                  distribution along the blade and determining main flow properties, such as the
+                  flow exit angle.
+
+                  MISES is a widely recognized software in the turbomachinery industry, renowned for its
+                  robustness, speed, and reliable results. Extensive testing has been conducted to analyze
+                  the reliability of its results. Grid independence has also been evaluated across various test
+                  cases.
+
+                  The program comprises distinct blocks, each serving a specific purpose. The primary
+                  blocks include:
+
+                      • ISES: A library responsible for generating the grid based on the blade geometry.
+                      • ISET: A library used to compute the flow properties within the blade channel.
+
+                  The subsequent sections will explain the configuration files used within the program and
+                  the main results obtained.
+
+                  3.1.      ISET
+
+                  The initial step involves loading the geometry into the software and performing grid
+                  generation.
+
+                  The grid generation process is closely tied to streamtubes that define flow properties.
+                  The blade geometry is uploaded using the blade.datablade file. This file contains the
+                  blade coordinates in the blade-to-blade plane. The grid computation is initiated through an initial incompressible flow simulation. This rapid grid generation exhibits high correlation, particularly for high-pressure turbine blades, with the final flow path.
+
+            It is important to note that the analyzed blades have an open trailing edge. This is due
+            to the fact that wake model used in MISES is built on an open trailing edge, especially for
+            simulations involving HPT blades.
+
+            ISET specifically focuses on loading the blade geometry and generating the grid. CHINL
+            and CHOUT define the grid boundaries, while SINL and SOUT/KUTTA provide an initial
+            approximation of the potential flow around the blade, which contributes to the grid gen-
+            eration.
+
+                  3| MISES                                                                                     19
+
+                  3.2.      ISES
+
+                  The second step involves configuring the flow solver. The ises.datablade configuration
+                  file is used to set up the flow solver, including flow solution and turbulence modeling.
+
+                  3.2.1.  Variables and Constraints
+
+                  The first row of Listing 3.2 sets up the flow variables which in this case are:
+
+                      • INL SLOPE: Inlet flow angle α1, expressed as a tangent value
+                      • EXIT SLOPE: Outlet flow angle α2, expressed as a tangent value
+                      • LE STAGNATION: Stagnation point at the leading edge, adjustable by the solver from
+                        the computed value computed by ISET
+                      • EXIT PRESSURE: Outlet static pressure
+                      • INL MACH: Inlet Mach number
+
+                  The second row specifies the constraints applied during the simulation and the strategy
+                  for solving the flow. Constraints include:
+
+                      • LE KUTTA: Kutta condition at the leading edge
+                      • TE KUTTA: Kutta condition at the trailing edge
+
+                  Solver strategies are:
+
+                • INL SLOPE DRIVE: Driving α1 to the user-defined value
+                • INL P0/P0r DRIVE: Driving the pressure ratio p0 to the user-defined value
+                                                                      p0,r
+                • OUT MACH DRIVE: Driving M2 to the user-defined value
+
+            The initial flow properties and target variables for achieving solution convergence are set
+            in the third and fourth rows of ises.datablade.
+
+            3.2.2.  Boundary Conditions
+
+            Similar to ISET for the grid properties, ISES uses variables to define inlet and outlet
+            boundary condition positions. Additionally, boundary condition properties are established
+            to numerically define the problem. Imposed boundary conditions include:
+
+                • Inlet flow angle α1
+                • Exit Mach number M2
+                • Kutta condition at the trailing edge of the blade
+                • the Kutta condition at the leading edge of the blade - it can be seen as a reverse
+                  Kutta condition at the trailing edge adapted to the leading edge: this in order to
+                  gurantee physical values and directionality of the flow at the leading edge.
+
+            3.2.3.  Flow Solver Strategy
+
+            The solver adopts a driven-based approach.
+
+            The flow properties are initialized using ises.datablade. Through multiple iterations,
+            the solver refines the flow approximation while driving the solution towards the speci-
+            fied boundary condition values, such as α (INL SLOPE), M (OUT MACH), and p0 (INL
+                                                          1                   2                    p0,r
+            P1/P0a).
+
+            The exit flow angle is not part of the driven-variables as it is an optimization parameter.
+
+            The solver within ISES offers multiple strategies to solve the problem, [4, Ch. 4]. The
+            solver utilized in datablade is a partially isentropic solver. It solves the problem treating
+            the flow as isentropic by default. However, if shocks are present in the blade channel, the
+            solver considers these entropy variations, adjusting the flow properties [14]. The presence
+            of shocks is analyzed based on the density field ρ.
+
+                  3| MISES                                                                                     21
+
+                  3.2.4.  Turbulence Modeling
+
+                  Turbulence is modeled inside the program [4, Ch. 4] following the en model [3] and the
+
+                  Abu-Ghannam-Shaw model [3]. The swapping between these two models is related
+                  to the NCRIT parameter which is a weight used for the turbulence models setup.
+                  Once one of the two models is triggered, that model predicts the flow transition and
+                  the turbulence properties.
+
+                  In order to increase the simulation speed, XTRANS1 and XTRANS2 are set to 0.15; these
+                  two variables predict the transition point over the blade. The transition over the blade
+                  is then modified by the turbulence models inside ISES. The program starts simulating
+                  the flow using the transition point set by the designer. If the transition point does not
+                  suit physics, the program starts computing the boundary layer separation point using
+                  one of the aforementioned transition models. Once the separation point is computed, the
+                  physical quantities, related to the laminar and turbulent regime of the flow, are computed
+                  by the flow solver. To sum up, the key parameters for the turbulence modeling are the
+                  Reynold number, REYNOLDS, the NCRIT parameter which is a triggering parameter between
+                  the two transition models and the XTRANS1 and XTRANS2 values which are the speeding
+                  up parameters for the transition point approximation.
+
+                  Row 6 and 7 in Listing 3.1 show the turbulence modeling setup.
+
+                  3.3.      MISES Steps
+
+                  Figure 3.1 displays a blade pre-processed by ISET for a spline interpolation of the geom-
+                  etry. This can be seen as the preprocessing for the grid generation of the problem
+
+
+
+                                              Figure 3.1: Spline-interpolated blade.
+
+            22                                                                                    3| MISES
+
+            Following the spline approximation, there is an intermediate step for allocating the grid
+            properties and defining the position of the boundary conditions, as shown in Figure 3.2.
+
+
+
+                      Figure 3.2: Grid properties allocation and boundary conditions setup.
+
+            The grid is consequently computed using a potential solver which generates an approxi-
+            mation of the flow that allows the generation of the study cells inside the domain.
+
+                  3| MISES                                                                                     23
+
+
+
+                                Figure 3.3: Grid used by ISES for flow property computation.
+
+
+
+                  Flow properties are computed in ISES based on ises.datablade settings, as visualized
+                  in Figure 3.4.
+
+            24                                                                                    3| MISES
+
+
+
+                      Figure 3.4: Contour plot of flow properties computed by ISES module.
+
+
+
+            Once flow is computed, the Mach fraction distribution along the blade is extracted using
+            the EDP module in MISES. This module reads selected flow property (Mach number in
+            this case) and saves it in a .dat file. The Mach fraction distribution on both suction and
+            pressure sides of the blade is calculated using the two Mach numbers at the trailing edge
+            of the blade which result different because the presence of the wake.
+
+                                                                                                               25
+
+
+
+4 |  datablade
+
+This chapter introduces the code developed for the database generation and analysis.
+It will also explain the main aspects of the code in terms of blade generation and
+optimization strategy. The code has been named datablade.
+
+4.1.      Structure
+
+Figure 4.1 represents the directory subdivision of datablade. The program structure is
+based on blocks that can be combined for different purposes.
+
+
+4.2.      Configuration File
+
+datablade optimization is configured using a configuration file. The configuration file
+is in .json format for allowing better reading and handability.
+
+The following listings are parts of the configuration file -config.json- used indatablade.
+All the dictionary entries are called as closer as possible to the physical variables.
+
+Listing 4.1 initilizes the initial guess for the blade optimization. Starting from its geometry
+- camberline, suction side and pressure side properties - and allocating the pitch and the
+trailing edge radius (which is kept constant at R  = 1.25·10−2 for the whole database).
+
+At the end of config.json, in Listing 4.4, there is the definition of the optimization
+strategy used in datablade.
+
+4.3.      Optimization
+
+The optimization algorithm used in datablade is a classic gradient-free method. The
+method used is the Simplex method [11]. Even though the method finds the local
+minima, satisfactory results can be guaranteed using:
+
+    • an appropriate choice of the initial guess, x0
+    • a dimensionality adaptation strategy for the problem
+    • an appropriate cost function which guarantees reliable results
+
+4.3.1.  Dimensionality Adaptation
+
+The optimization of blades poses a challenging multidimensional optimization problem,
+demanding significant time and resources to attain the optimal solution. Given this
+complexity, an intelligent approach is necessary to streamline blade optimization. The
+strategy employed in this study demonstrates the ability to yield favorable outcomes for
+constructing the database. This strategy involves optimizing blades by manipulating
+the dimensionality of the problem [1].
+
+The optimization process initiates by optimizing a blade with a limited set of param-
+eters. While a blade with restricted degrees of freedom may not produce an ideal
+outcome, it does contribute to flattening the design space, thereby mitigating un-
+favorable design intervals where the optimizer might struggle to converge. Once opti-
+mization with fewer parameters achieves convergence, it’s highly probable that increasing
+the degree of freedom will lead to improved solutions.
+
+Empirical tests have revealed that the most favorable outcomes are achieved by doubling
+the degree of freedom in blade parametrization after each optimization cycle. Should a
+blade successfully converge with a low degree of freedom parametrization, the computed
+blade is subsequently scaled to populate the database with blades parametrized with the
+same number of parameters.
+
+4.3.2.  Cost Function
+
+The blade optimization is related to two main errors:
+
+    • the load error over the blade, which is computed as the root mean squared error
+      over the loading
+    • the flow exit angle error
+
+The root mean squared error is computed using Equation (4.1). The exit angle flow error
+is then computed using Equation (4.2).
+
+Equation (4.1) gets the Mach fraction distribution along the blade using the .dat file com-
+puted by EDP module in MISES and the Mach fraction distribution using the aerodynamic
+style curve computed in Chapter 2.
+
+Once RMSE and ∆α2 have been computed, the cost function, Equation (4.3), is a blend
+of those properties. It is important that the cost function relates the RMSE and ∆α2
+with a product; this in order to reduce the competition between the two variables during
+the optimization.
+
+Equation 4.3 features the product between the RMSE with another term which is a blend
+of different quantities. The 0.04 factor represents a scale which adapts the angle error
+to the overall cost function, it dictates how important the angle error, ∆α2, should be
+compared to the RMSE. The scaling value acts on the terms in round parenteses. The
+value in the round parenteses is a threshold switch for the angle error. The threshold is
+set up by the max(0, ∆α2−1.0) term. Once ∆α2−1.0 > 0, the switch activates and ∆α2
+contributes to the cost function. On top of that, the switch is squared; this in order to
+allow a smooth transition of the error from a region where just RMSE contributes
+to the cost function - for ∆α2 − 1.0 ≤ 0 - to the region where both RMSE and ∆α2
+contribute to the overall cost function - for ∆α2 −1.0 > 0.
+
+The cost function serves a dual purpose. Firstly, it establishes a guideline governing the
+convergence behavior of the optimization algorithm. Secondly, it provides a threshold of
+acceptability for the optimized blades. If the cost function value for an optimized blade
+is high, that particular blade might be excluded to ensure a more precise database.
+
+4.4.      Optimizer
+
+On top of the optimization strategy there is the optimizer. The datablade optimizer
+combines the MISES software with the scipy module [13]. These two components allow
+good performance and robustness.
+
+Figure 4.2 illustrates how the blade is optimized by datablade. It comprehends the
+optimization algorithm keeping the blade dimensionality fixed alongside the scaling pro-
+cess to increase convergence. Figure 4.2 starts with the loading of the configuration file,
+config.json, which provides the initial guess - where the optimization starts -, the aero-
+dynamic style and the aerodynamic duty of the blade. Once these properties are loaded,
+the program starts to optimize the blade using an optimization based on the dimension-
+ality adaptation of the blade to the problem.
+
+5 |  Database
+
+The purpose of this chapter is to explain the generation of the database that will be used
+by the interpolation algorithm in Chapter 6. It starts explaining the domain of study and
+then it will define an appropriate strategy for increasing the overall convergence speed of
+the whole database.
+
+This strategy can be seen as an additional acceleration layer for the computation of an
+appropriate initial guess, x0, used in the optimizer.
+
+5.1.      Domain
+
+This study pertains to high-pressure turbine sections. The domain of study is presented
+in Table 5.1.
+
+Due to theReynolds indipendenceof the studied flow,the investigation has been carried
+out using a fixed Reynolds number value - Re = 6·105. α , α , M , and Re are physical
+quantities readily visualized within the problem setup.
+
+The other four parameters constitutes engineering parameters that define the aerodynamic style properties. These parameters come
+out from numerours tests, aiming to identify values that both align with physics and fit
+within blade capabilities. These parameters are completelly arbitrary and are the most
+suitable for the intent of the present work.
+
+The additional optimization strategy consists in linearizing the inner domain using outer
+domain points. This will result in optimizing first the outer points of the domain, Ta-
+ble 5.1, which will then provide a suitable initial guess, x0, for the inner domain points.
+
+Figure 5.1 shows the linear interpolation of the stagger angle, γ, with respect to the inlet
+flow angle, α1, and outlet flow angle, α2.
+
+Figure 5.1: Linear interpolation of the stagger angle, γ, with respect to α1 and α2 from
+the corner points in red.
+
+This interpolation procedure is applied to all the blade parameters: starting from the
+camberline parameters and ending to the blade thickness parameters.
+
+5.1.1.  Outer Points
+
+The computation of the corner points of the domain is the first step for the generation
+of the database. These points are the most time-consuming to converge, as the optimizer
+might start from an initial guess far from the optimal configuration.
+
+Computing these corner points is critical, as it accelerates the computation of the inner
+points of the domain and increases the probability of optimizer convergence for inner
+points.
+
+With the domain boundaries listed in Table 5.1, datablade optimizes 128 blades to
+generate the corner points of the domain.
+
+5.1.2.  Inner Points
+
+Figure 5.2: Complete γ variation with respect to α1 & α2. Corner points in red and inner
+points in black.
+
+Once the corner points are generated, inner points are computed using linear interpolation.
+An example of linear interpolation is shown in Figure 5.1, which provides a preliminary
+estimation of the stagger angle, γ, variation based on the inlet flow angle, α1, and the
+outlet flow angle, α2.
+
+According to Table 5.1, 2916 blades will be optimized for the inner points study.
+
+Figure 5.2 shows the interpolated γ with respect to α1 and α2 after all database points
+have been computed.
+
+5.2.      Optimized Data
+
+The database contains Kulfan’s parameters for the definitions of the blade geometry.
+Below, some key blades of interest for initial database analysis are defined. The database’s
+blades are categorized as follows:
+
+• Blade configuration with low error on the loading distribution and low error on
+the exit flow angle
+• Blade configuration with low error on the loading distribution but high error on
+the exit flow angle1.
+
+• Blade configuration with high error on the loading distribution and high error
+on the exit flow angle
+
+Table 5.2 defines the complete database after optimization.
+
+Table 5.2 reveals an acceptable mean value for both cost and ∆α2. It is noteworthy that
+more than 75% of the database has a cost below 2.75%, indicating that the majority of
+the blades converge toward the desired aerodynamic style. This initial analysis is crucial
+as it indirectly suggests that only a few blades will be excluded from the machine learning
+analysis.
+
+Another important observation from Table 5.2 is that the machine learning algorithm
+must also address the correction of the exit flow angle, α2. This is necessary because over
+25% of the database exhibits an exit flow angle error, ∆α , exceeding 1◦.
+                                                        2
+
+Figure 5.3 showcases the best results achievable by the optimizer. The computed load
+adheres to the target load, while maintaining an exit angle error, ∆α2, below an acceptable
+threshold of 1◦.
+
+In the present work it is considered a high exit flow angle error: ∆α >1◦.
+
+Due to physical constraints and the optimization algorithm, not every optimized blade
+simultaneously achieves the desired loading distribution and a low exit angle error.
+
+Figure 5.4 represents a poor-performing blade. Such blades are excluded from the machine
+learning analysis. The exclusion is due to the high exit angle error and the unacceptable
+discrepancy between the computed load and the target load.
+
+These blades do not contribute effectively to the database because they do not appropri-
+ately match the loading distribution. The primary issue with these blades is the loading
+distribution error. If a blade exhibits a substantial error in loading distribution, the in-
+formation it provides holds no relevance within the studied design space. This is because
+the blade configuration lacks correlation with the desired aerodynamic style.
+
+Figure 5.5 depicts an acceptable blade. Despite its elevated exit angle error, the machine
+learning algorithm can rectify this error by shifting the interpolated field to achieve a
+better fit for the exit angle. As Chapter 6 will demonstrate, the exit angle error can be
+corrected using a suitable machine learning network. This error can be interpreted as an
+information about exit angle behavior within specific regions of the design space.
+
+5.2.1.  Error Distribution
+
+As discussed in the previous sections, there are blades which present a significant error
+on the loading distribution, denoted by RMSE. This error cannot be corrected by the
+machine learning algorithm under any circumstances; this is related by the fact that bad
+input data will inevitably lead to bad output data. Blades falling into this category
+of unacceptable designs are referred to as unfeasible designs.
+
+These particular configurations will be omitted to provide the machine learning algorithm
+only with useful data for interpolation.
+
+Having introduced the concept of unfeasible design it is necessary to define the regions
+of the database where the error on the aerodynamic style can be considered not-acceptable.
+In this study, the error in the aerodynamic style is considered not-acceptable if it exceeds
+a cost threshold of 2.75%.
+
+5.2.2.  Filtering
+
+Although the data within the database can be processed by the machine learning algo-
+rithm, it is necessary to filter the data in order to feed only useful entries to the interpo-
+lation algorithm - data which have significative relevance for the engineering purposes.
+
+Table 5.3 presents the filtered database, representing a refined version after undergoing
+this data filtering process.
+
+In this revised dataset, the number of blades is slightly reduced compared to the original
+database. This reduction is attributed to the exclusion of certain blades due to their
+inadmissible errors in blade loading.
+
+The unfeasible designs are concentrated at the boundaries of the domain. Figure 5.8
+shows the cost function of a slice of the domain. The data with a cost above 2.75% have
+been dropped off.
+
+The filtering operation has been conducted only over the cost properties of the blade.
+Even though the cost relates the RMSE and the ∆α2, its value is dictated mainly by
+the RMSE.
+
+Figure 5.9 shows the error over the exit angle. The filtering operation are not made on
+the ∆α2 domain.
+
+6 |  Artificial Intellingence
+
+The present chapter has the purpose of explaining the database interpolation using a
+machine learning model.
+
+6.1.      Problem Framing
+
+The machine learning algorithm is based on a regression algorithm. The regression algo-
+rithm is based on a domain interpolation which does not include any aleatory variable.
+
+This algorithm predicts a blade geometry giving as input the aerodynamic duty and
+the aerodynamic style. The blades are parametrized the same way the database’s blade
+are.
+
+6.2.      Interpolation
+
+The regression starts with the definition of the domains of study:
+
+• X contains the aerodynamic style and aerodynamic duty properties. X ∈ R2787×8:
+
+where 2787 is the number of filtered blades and 8 are the number of parameters
+for defining the aerodynamic style and the aerodynamic duty of the blade. The x
+vector is the general element of X
+• Y stores the camberline and Kulfan parameters for the description of the blade.
+Y ∈ R2787×42: where2787is the number of blades and42is the number of parameters
+
+used for representing each blade - Kulfan parameters and pitch. The y vector is the
+general element of Y
+
+The machine learning algorithm has the goal to find an approximation of a mapping
+function, f, which relates the two domains, X and Y.
+
+Ideally, the mapping function, f, defines Equation (6.1):
+
+The machine learning algorithm has the role of computing fˆ which is the numerical
+approximation of f. The new function, fˆ, will define the following problem:
+
+For the computation of fˆ, the X and Y domains are splitted into two sub-domains each.
+For the present work, a splitting factor of 30% has been used after extensive tests over
+the many possible factors. The splitting will then generate four sub-domains:
+
+• X domain:
+
+– training set: X∗, made by x∗
+– test set: X∗∗, made by x∗∗
+• Y domain:
+
+– training set: Y∗, made by y∗
+– test set: Y∗∗, made by y∗∗
+
+6.2.1.  Radial Basis Function
+
+Once introduced the main purpose of the machine learning algorithm, it is necessary to
+find a suitable regression algorithm to interpolate the domain. In the present work,
+the radial basis functions [7] (RBF) are used as the kernel of the machine learning model.
+These functions are a very powerful tool for the interpolation of data. The overfitting
+problem is manageable and the model allows perfect interpolation of the training points,
+(x∗,y∗).
+
+The kernel on its side relies on its length scale, cj, and on the euclidean norm between
+two points in the domain, x and xj, as presented in Equation (6.3).
+
+From Equation (6.4) it is possible to understand that the higher the euclidean distance
+the lower the influence of a point x in the system. This is a very powerful feature
+because it decorrelates blades which define aerodynamic duties and aerodynamic styles
+that are completely different.
+
+At the same time, the usage of gaussian functions for the approximation of the domain
+allows to smooth out fˆ. This feature is very important because it guarantees a smooth
+variation of the geometrical properties of the blade allowing a smooth change of the
+camberline and Kulfan parameters [5]. Figure 6.2 shows the radial basis functions with a
+fixed length scale.
+
+6.2.2.  Training & Testing
+
+Having set the fundamentals of the machine learning algorithm, it is necessary to con-
+struct the system for the computation of fˆ. The problem is defined by a linear system
+of equations. These equations are a linear combinations of radial basis functions, Equa-
+tion (6.4), which are weighted by parameters which take the name of weights. These
+weights have the role to properly fit the radial basis functions into the database. The
+following set of equations represent the problem:
+
+Once the linear system is set, it is necessary to define a way for computing w. The
+problem will reduce to a minimization problem. The problem is characterized by the
+search of the weight w such that a cost function is reduced to its minimum. The problem
+is represented by Equation (6.8):
+
+Equation (6.9) shows a piece of the minimization problem in Equation (6.8). In this case
+the left hand side of the equation shows a part of the y∗ vector which correspond to the
+γ optimization problem. The whole system is a concatenation of problems spanning all
+the Kulfan’s parameters and the pitch. The matrix in Equation (6.9) is a more detailed
+form of Equation (6.7). The right hand side of Equation (6.9) takes the γ subscript: this
+to indicate that the elements are referred only to the γ degree of freedom.
+
+The optimization problem is solved by an iterative algorithm which finds the optimum
+solution, w. The optimization is conducted over the training set, (X∗,Y∗).
+
+Once w is computed, it is necessary to understand the quality of the weights. This test
+is done using the test set, (X∗∗,Y∗∗) following Equation (6.10):
+
+6.2.3.  Sckit-Learn
+
+The machine learning analysis of the system has been done using a robust and consolidated
+library: Sckit-Learn.
+
+Listing 6.1 represents the commands for the normalization of the whole database. In
+terms of operativity and interpolation errors, it is common use to normalize data in [0,1]
+interval.
+
+Having preprocessed the data, it is necessary to split the normalized data into the training
+and test sets. Once the entries are randomly splitted, the RBF kernel is initialized for the
+usage in the interpolation algorithm. The final step for the interpolation of the database
+consists into the minimization of the J functional which computes the w vector.
+
+Having optimized the radial basis function network, it is necessary to understand its
+properties; a test over the network is done using the test set.
+
+The test scores the computed function, fˆ. The score gives an idea of how well the model
+fits the data in terms of explained variance.
+
+The test scores a 3% error. For the present work, the fˆ computed satisfies the projects
+requirements. As result, fˆapproximates the blade geometry given as inputs the aerody-
+namic style and the aerodynamic duty.
+
+6.2.4.  Tuning
+
+Tuning the hyperparameters for a RBF kernel is an important step to achieve optimal
+performance. The key hyperparameters to focus for the RBF network are:
+
+• Length Scale (l): This hyperparameter controls the smoothness of the RBF kernel.
+A smaller length scale leads to a more wiggly and flexible kernel, while a larger
+length scale makes it smoother.
+• α: This parameter determines the regularization strength of the model. It helps
+to prevent overfitting and stabilize the computations. A larger α places stronger
+emphasis on noise reduction.
+
+The tuning has been done using a trial and error approach over the RBF lenght scale and
+the regularization parameter used by the regressor. The tuning has given:
+
+• l = 0.1
+• α = 1·10−3
+
+Different parameters have been tested but they generated unacceptable errors at the
+boundaries of the domain of study due to the RBF properties. The gaussian functions do
+not show good accuracy at the boundaries because of the poor extrapolation properties
+of the method in that region of the domain.
+
+6.3.      Results and Accuracy
+
+This section presents the extrapolation of the blade geometry and the load testing using
+the computed fˆ.
+
+In Figure 6.3, a blade computed from fˆis shown. This blade exhibits a 1.8% error in the
+loading distribution and an error of 0.01◦ in the exit angle. The aerodynamic duty and
+
+style of the blade differ from the entries in the X dataset.
+
+Figure 6.4 shows a blade which is considered acceptable for the design study of a section.
+
+Figure 6.5 illustrates the discrepancy between the generated blade and the target load
+due to the limitations of the machine learning model based on the study datasets (X,Y).
+
+Figure 6.6 demonstrates the same error pattern as seen in Figure 6.5. After an extensive
+analysis of the computed fˆfunction, the error throughout the entire interpolated domain
+of study remains under 4%, while the exit angle error (∆α ) remains below 0.5◦. 
+These 2 thresholds are considered acceptable for an initial analysis of a blade using a rapid design tool.
+
+7 |  Modal Reduction
+
+The following sections aim to explain the dimensionality reduction of the problem com-
+paring the Kulfan based representation of the domain to a more physical representation
+using a modal decomposition of data.
+
+7.1.      Problem Framing
+
+The principal component analysis is one of the main methods for the dimensionality
+reduction of a problem [6]. Unlike the machine learning part, the study is conducted only
+over the Y dataset.
+
+7.2.      Principal Component Analysis
+
+The method starts with a global analysis of the correlation between the different blade
+parameters:
+
+    • γ, χ1 and χ2 for the camberline
+    • Asuct for the suction side parametrization
+    • Apress for the pressure side parametrization
+    • pitch
+
+From this correlation analysis, the method extracts the main correlation directions. These
+directions will then define a vector which can be seen as one of the eigenvectors which
+defines the Y dataset. After having computed the first direction, it is possible to compute
+the other modal directions.
+
+Once computed all the modal directions, it is possible to understand their importance for
+the definition of the whole dataset. For each modal direction a variance index can be
+extracted. This index represents the importance of the mode in the whole database. The
+higher the variance the higher the dataset coverage of its respective mode.
+
+A good dataset coverage is presented for a variance coverage above of 95%.
+
+Figure 7.1 shows the variance distribution related to the dataset modes. With just three
+modes it is possible to cover more than 95% of the entire database.
+
+
+7.2.1.  Modal Analysis
+
+After analyzing the primary modes within Y, it becomes feasible to establish a connection
+between the load variations attributed to these modes. This procedure facilitates a further
+refinement of the study domain by solely considering a single dataset, namely Y. This
+filtering process is not directly linked to theX dataset; instead, it can be better understood
+as a direct manifestation of the key geometric characteristics inherent in the Y dataset.
+
+Figure 7.2 shows the first mode. This mode is represented letting varying its amplitude
+over a reference blade. Figure 7.2 represents also the load distribution varying the mode
+amplitude. From the plot it is possible understand that the first mode comprehends a lot
+of variation of the camberline. This variation will result in a change of the suction side
+load, especially on the peak Mach number and on the leading edge loading.
+
+The second mode, represented in Figure 7.3, involves heavily the blade thickness variation.
+The blade thickness variations do not change the loading at the leading edge on the suction
+side but it has an evident effect on the loading distribution at the leading edge on the
+pressure side. Even though the suction side leading edge is not affected by this mode, the
+
+peak Mach number on the suction side of the blade shows dependence on this mode; it
+can be seen as a mode which changes locally the load distribution over the suction side.
+
+The first and second mode do not affect the position of the peak Mach number over
+the suction side. The third mode, represented in Figure 7.4, features the change in the
+position of the peak Mach number on the suction side. At the same time, appreciable
+changes are made on the pressure side Mach distribution.
+
+Figure 7.5 represents the fourth dataset mode. Even though this mode can be seen as
+important, the dataset it spans is relatively small. This because the variance, σ, attributed
+to the fourth mode is smaller than the variance of its previous modal forms. This mode
+features best the changes over the suction side of the blade. It is clear that the leading
+edge loading and the peak load on the suction side of the blade are heavily dependent
+on this mode. Even though this behavior, the influence of this mode on the dataset is of
+lower importance compared to the first mode.
+The present work has shown the principal dataset modes - from the first mode to the
+third - but it does not show the whole modal spectrum of the Y dataset. The following
+modes are more related to important modal forms from which important results can be
+taken.
+
+One of the most particular modal shapes are the 10th mode, the 30th mode and 42nd
+mode, the last mode. These modes underline important physical properties:
+
+• the fact that the modal spectrum does not follow the same engineering strategy for
+  the design of a section but it relies only on the dataset: mode 10th.
+• there are modes which act on a very specific part of the loading distribution: mode
+  30th.
+• there are modes which can be seen as noise and have low importance in the section
+  design process: mode 42nd.
+
+Figure 7.6 shows the 10th mode. This mode affects mainly the pitch degree of freedom.
+This mode changes the load distribution over the blade because a variation of the channel
+size. At the same time, the exit flow angle is heavily dependent on the solidity (solidity =
+pitch) which is related to the pitch.
+chord
+
+Even though the 10th mode can be seen as an important mode because of the turboma-
+chinery theory, it is of secondary importance inside the modal behavior of the system.
+This because the previous modes span much more space than the 10th.
+
+Using Figure 7.7, it is possible to understand the influence, both over geometry and
+loading, of a low-variance mode. In this figure, the main geometrical variation is made
+over the pressure side at the leading edge of the blade. This change affects mostly the
+local Mach fraction distribution at the leading edge on the pressure side. With this mode,
+it is possible to highlight the fact that avoiding modes with low variance does not generate
+huge errors in the geometry representation.
+
+Figure 7.8 shows the last modal shape. This shape can be seen as a wobbling noise around
+the blade and it has the lowest importance in the representation of the blade domain. As
+the 30th modal shape, the 42nd mode can be dropped off for a modal representation of a
+blade without loosing accuracy both in geometry and loading.
+
+8 |  Conclusions
+
+This chapter concludes the present work and highlights the main results, limitations,
+and possible achievable improvements.
+
+8.1.      Introduction and Reiteration
+
+In this study, a groundbreaking design methodology has been developed for the field of
+turbomachinery blade design. This novel approach eliminates the need for conventional
+CFD simulations, significantly reducing design time while establishing insightful correla-
+tions between data and blade geometries.
+
+8.2.      Summary of Findings
+
+The most crucial outcome of this research is the successful validation of the proposed
+methodology. It demonstrates applicability in blade design, offering speed and the ability
+to break down the design space into principal geometrical modes.
+
+8.3.      Implication and Significance
+
+These identified modes present the opportunity to design blades more efficiently, em-
+ploying a limited number of parameters compared to traditional blade parametrization
+methods. The establishment of a correlation between blade geometry and parametrized
+loading distribution further empowers the model. Simultaneously, the model defines the
+design’s limitations in terms of loading, granting designers a comprehensive understanding
+of the design space and constraints in turbomachinery design.
+
+8.4.      Limitations
+
+It’s important to acknowledge that the model’s boundaries are defined by the laws of
+physics. The sensitivity of database generation to loading parametrization highlights the
+close connection to physics. Moreover, the quality of the input database significantly
+impacts the quality of the resulting blades. Ensuring a high-quality database is essential
+for optimal results.
+
+8.5.      Future Directions
+
+Future research directions could explore how blade geometry behaves with variations in the
+Reynolds number. Investigating blade geometry changes under diverse loading conditions
+also holds promise for advancing the methodology.
+
+8.6.      Closing Statements
+
+The model’s practicality in the industry is evident, serving as an initial design layer
+for blade generation. By seamlessly integrating physics and machine learning through
+data, it opens up a new avenue for designing turbomachinery systems. This efficient tool
+accelerates the design process, making it accessible to designers across the field. The
+profound significance lies in its ability to reshape the design landscape, creating a faster
+and more intuitive approach for designing turbomachinery systems.

@@ -1,0 +1,108 @@
+\begin{tikzpicture}[
+    scale=0.24, 
+    transform shape,
+    thick,
+    font = {\Huge\bfseries\sffamily},
+    >=stealth',
+    dot/.style = {
+        draw,
+        fill = white,
+        circle,
+        inner sep = 0pt,
+        minimum size = 4pt
+    }
+    ]
+  
+    \coordinate (O) at (0,0);
+    \draw[->] (-6,0) -- (12,0) coordinate[label = {below:$x$}] (xmax);
+    \draw[->] (0,-5) -- (0,22) coordinate[label = {right:$y$}] (ymax);
+
+    \node[
+        color=red, 
+        label = {below right:\color{red}{$X$}}
+    ] (X) at (2.5, 2) {};
+
+    % \node[
+    %     label = {below right:$c_0 = 10$}
+    % ] (P00) at (-2, -2) {};
+
+    \node[ 
+        label = {below right:$c_1 = 3$}
+    ] (P10) at (10, 7) {};
+
+    \node[
+        label = {above right:$c_2 = 7$}
+    ] (P20) at (1, 8) {};
+
+    % DRAW TRIANGLE
+    % \fill[semitransparent, pattern=north west lines, pattern color=gray] (P00.center)--(P10.center)--(P20.center);
+
+    % DRAW LINES
+    % \draw[color=black, line width=1pt] (P00) -- (P10);
+    % \draw[color=black, line width=1pt] (P10) -- (P20);
+    % \draw[color=black, line width=1pt] (P20) -- (P00);
+
+    % DRAW NODES
+    % \draw[color=black, fill=white, line width=0.5pt] (P00) circle (.2);
+    \draw[color=black, fill=white, line width=0.5pt] (P10) circle (.2);
+    \draw[color=black, fill=white, line width=0.5pt] (P20) circle (.2);
+    \draw[color=red, fill=white, line width=1pt, label={above right=$X$}] (X) circle (.25);
+
+    % \node[
+    %     label = {above right:$c_0 = 12$}
+    % ] (P01) at (2, 20) {};
+
+    % DRAW TRIANGLE
+    % \fill[semitransparent, pattern=north west lines, pattern color=green] (P01.center)--(P10.center)--(P20.center);
+    
+    % % DRAW NODES
+    % \draw[color=black, line width=0.5pt] (P01) circle (.2);
+    % \draw[color=black, line width=1.5pt] (P10) circle (.1);
+    % \draw[color=black, line width=1.5pt] (P20) circle (.1);
+
+    % DRAW LINES
+    % \draw[color=black, line width=1pt] (P01) -- (P10);
+    % \draw[color=black, line width=1pt] (P10) -- (P20);
+    % \draw[color=black, line width=1pt] (P20) -- (P01);
+
+    % DRAW LINES
+    % \draw[color=black, line width=1pt] (P01) -- (P00);
+
+    \node[
+        label = {above left:$c_0 = 6$}
+    ] (P02) at (-1, 3.5) {};
+
+    % DRAW TRIANGLE
+    \fill[fill=red!30, semitransparent] (P02.center)--(P10.center)--(P20.center);
+
+    % DRAW NODES
+    \draw[color=black, fill=white, line width=0.5pt] (P02) circle (.2);
+    \draw[color=black, fill=white, line width=0.5pt] (P10) circle (.2);
+    \draw[color=black, fill=white, line width=0.5pt] (P20) circle (.2);
+
+    % % DRAW LINES
+    \draw[color=black, line width=1pt] (P02) -- (P10);
+    \draw[color=black, line width=1pt] (P10) -- (P20);
+    \draw[color=black, line width=1pt] (P20) -- (P02);
+
+    % \node[
+    %     color=black,
+    %     line width=2pt,
+    %     dot, 
+    %     label = {below left:$c_0 = 0.2$}
+    % ] (P21) at (2.1, 2) {};
+
+    % % DRAW TRIANGLE
+    % \fill[fill=yellow, pattern color=blue, semitransparent] (P02.center)--(P10.center)--(P21.center);
+
+    % % DRAW NODES
+    % \draw[color=black, line width=1.5pt] (P02) circle (.1);
+    % \draw[color=black, line width=1.5pt] (P10) circle (.1);
+    % \draw[color=black, line width=1.5pt] (P21) circle (.1);
+
+    % % DRAW LINES
+    % \draw[color=black, line width=1pt] (P02) -- (P10);
+    % \draw[color=black, line width=1pt] (P10) -- (P21);
+    % \draw[color=black, line width=1pt] (P21) -- (P02);
+
+\end{tikzpicture}
